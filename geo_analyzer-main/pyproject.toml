@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=70.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geo-analyzer"
+version = "0.1.0"
+description = "Geo Analyzer desktop application based on 2GIS API"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+authors = [
+    { name = "Sergey Kuznetsov" }
+]
+dependencies = [
+    "pandas>=3.0,<3.1",
+    "geopandas>=1.0,<1.2",
+    "shapely>=2.0,<3.0",
+    "requests>=2.31,<3.0",
+    "matplotlib>=3.8,<4.0",
+    "openpyxl>=3.1,<4.0",
+    "networkx>=3.2,<4.0",
+    "xlsxwriter>=3.2,<4.0",
+    "pyarrow>=23.0,<24.0",
+    "PyYAML>=6.0,<7.0",
+    "python-dotenv>=1.0,<2.0",
+    "contextily>=1.6,<2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2,<9.0",
+    "pyinstaller>=6.10,<7.0",
+]
+
+[project.scripts]
+geo-analyzer = "geo_analyzer.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

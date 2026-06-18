@@ -1,0 +1,132 @@
+rubrics:
+  - category: "Супермаркеты"
+    rubric_name: "Супермаркеты"
+    rubric_id: ""
+
+  - category: "Продуктовые магазины"
+    rubric_name: "Продовольственные магазины"
+    rubric_id: ""
+
+  - category: "Аптеки"
+    rubric_name: "Аптеки"
+    rubric_id: ""
+
+  - category: "Пункты выдачи заказов"
+    rubric_name: "Пункты выдачи интернет-заказов"
+    rubric_id: ""
+
+  - category: "Кофейни"
+    rubric_name: "Кофейни"
+    rubric_id: ""
+
+  - category: "Пекарни"
+    rubric_name: "Пекарни"
+    rubric_id: ""
+
+  - category: "Кафе"
+    rubric_name: "Кафе"
+    rubric_id: ""
+
+  - category: "Рестораны"
+    rubric_name: "Рестораны"
+    rubric_id: ""
+
+  - category: "Школы"
+    rubric_name: "Школы"
+    rubric_id: ""
+
+  - category: "Детские сады"
+    rubric_name: "Детские сады"
+    rubric_id: ""
+
+  - category: "Дополнительное образование"
+    rubric_name: "Дополнительное образование"
+    rubric_id: ""
+
+  - category: "Детские игровые центры"
+    rubric_name: "Детские игровые центры"
+    rubric_id: ""
+
+  - category: "Медицинские центры"
+    rubric_name: "Медицинские центры"
+    rubric_id: ""
+
+  - category: "Поликлиники"
+    rubric_name: "Поликлиники"
+    rubric_id: ""
+
+  - category: "Ветеринарные клиники"
+    rubric_name: "Ветеринарные клиники"
+    rubric_id: ""
+
+  - category: "Зоомагазины"
+    rubric_name: "Зоомагазины"
+    rubric_id: ""
+
+  - category: "Фитнес-клубы"
+    rubric_name: "Фитнес-клубы"
+    rubric_id: ""
+
+  - category: "Салоны красоты"
+    rubric_name: "Салоны красоты"
+    rubric_id: ""
+
+  - category: "Парикмахерские"
+    rubric_name: "Парикмахерские"
+    rubric_id: ""
+
+  - category: "Ногтевые студии"
+    rubric_name: "Ногтевые студии"
+    rubric_id: ""
+
+  - category: "Химчистки"
+    rubric_name: "Химчистки"
+    rubric_id: ""
+
+  - category: "Ремонт обуви"
+    rubric_name: "Ремонт обуви"
+    rubric_id: ""
+
+  - category: "Ателье"
+    rubric_name: "Ателье"
+    rubric_id: ""
+
+  - category: "Ремонт техники"
+    rubric_name: "Ремонт бытовой техники"
+    rubric_id: ""
+
+  - category: "Хозяйственные магазины"
+    rubric_name: "Хозяйственные товары"
+    rubric_id: ""
+
+  - category: "Парки"
+    rubric_name: "Парки"
+    rubric_id: ""
+
+  - category: "Скверы"
+    rubric_name: "Скверы"
+    rubric_id: ""
+
+  - category: "Торговые центры"
+    rubric_name: "Торговые центры"
+    rubric_id: ""
+
+  - category: "Театры"
+    rubric_name: "Театры"
+    rubric_id: ""
+
+  - category: "Музеи"
+    rubric_name: "Музеи"
+    rubric_id: ""
+
+  - category: "Кинотеатры"
+    rubric_name: "Кинотеатры"
+    rubric_id: ""
+
+  - category: "Стадионы"
+    rubric_name: "Стадионы"
+    rubric_id: ""
+
+  - category: "Остановки общественного транспорта"
+    rubric_name: "Остановки общественного транспорта"
+    rubric_id: ""

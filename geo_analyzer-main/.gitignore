@@ -1,0 +1,92 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and local secrets
+.env
+.env.local
+.env.*.local
+src/geo_analyzer/core/_embedded_secret.py
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+cache/**
+!cache/
+!cache/.gitkeep
+!cache/graphs/
+!cache/graphs/.gitkeep
+
+data/cache/**
+!data/cache/
+!data/cache/.gitkeep
+
+data/data/**
+
+data/output/**
+!data/output/
+!data/output/.gitkeep
+
+data/raw/**
+!data/raw/
+!data/raw/.gitkeep
+
+data/processed/**
+!data/processed/
+!data/processed/.gitkeep
+
+data/debug/**
+!data/debug/
+!data/debug/.gitkeep
+
+data/benchmarks/**
+!data/benchmarks/
+!data/benchmarks/.gitkeep
+
+reports/generated/**
+reports/tmp/**
+
+# Generated reports, archives and images
+*.xlsx
+*.xls
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+*.zip
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+*.spec.bak
+*.manifest
+
+# Temporary folders
+tmp/
+temp/

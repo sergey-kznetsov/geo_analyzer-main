@@ -1,0 +1,194 @@
+dgis:
+  catalog_url: https://catalog.api.2gis.com
+  routing_url: https://routing.api.2gis.com
+  timeout: 30
+
+  # region_id ниже — только fallback. Основной режим:
+  # 1) геокодирование адреса;
+  # 2) определение region_id по координатам точки через 2GIS region/get;
+  # 3) получение официального списка рубрик этого региона через rubric/list;
+  # 4) загрузка POI по rubric_id.
+  region_id: '41'
+  region_name: Ижевск
+
+  places_page_size: 10
+
+  # Верхний предел страниц на одну рубрику.
+  # 2GIS обычно ограничивает page_size, поэтому для крупных городов лучше держать запас.
+  places_max_pages: 50
+
+  category_catalog_locale: ru_RU
+  strict_category_catalog: true
+
+  # Здесь задаются только человекочитаемые названия рубрик.
+  # rubric_id не фиксируем в конфиге, потому что он зависит от region_id.
+  place_queries:
+    - category: Супермаркеты
+      rubric_name: Супермаркеты
+
+    - category: Продуктовые магазины
+      rubric_name: Продуктовые магазины
+
+    - category: Аптеки
+      rubric_name: Аптеки
+
+    - category: Пункты выдачи заказов
+      rubric_name: Пункты выдачи интернет-заказов
+
+    - category: Кофейни
+      rubric_name: Кофейни
+
+    - category: Пекарни
+      rubric_name: Пекарни
+
+    - category: Кафе
+      rubric_name: Кафе
+
+    - category: Рестораны
+      rubric_name: Рестораны
+
+    - category: Школы
+      rubric_name: Школы
+
+    - category: Детские сады
+      rubric_name: Детские сады
+
+    - category: Детское дополнительное образование
+      rubric_name: Центры раннего развития детей
+
+    - category: Взрослое дополнительное образование
+      rubric_name: Переподготовка и повышение квалификации
+
+    - category: Детские игровые центры
+      rubric_name: Детские игровые залы
+
+    - category: Медицинские центры
+      rubric_name: Многопрофильные медицинские центры
+
+    - category: Поликлиники
+      rubric_name: Взрослые поликлиники
+
+    - category: Ветеринарные клиники
+      rubric_name: Ветеринарные клиники
+
+    - category: Зоомагазины
+      rubric_name: Зоотовары
+
+    - category: Фитнес-клубы
+      rubric_name: Фитнес-клубы
+
+    - category: Салоны красоты и парикмахерские
+      rubric_name: Парикмахерские
+
+    - category: Ногтевые студии
+      rubric_name: Ногтевые студии
+
+    - category: Химчистки
+      rubric_name: Химчистки одежды и текстиля
+
+    - category: Ремонт обуви
+      rubric_name: Ремонт обуви и кожгалантереи
+
+    - category: Ателье
+      rubric_name: Швейные ателье
+
+    - category: Ремонт техники
+      rubric_name: Ремонт и установка бытовой техники
+
+    - category: Хозяйственные магазины
+      rubric_name: Хозтовары
+
+    - category: Парки и скверы
+      rubric_name: Парки
+
+    - category: Торговые центры
+      rubric_name: Торговые центры
+
+    - category: Торгово-развлекательные центры
+      rubric_name: Торгово-развлекательные центры
+
+    - category: Торгово-развлекательные комплексы
+      rubric_name: Торгово-развлекательные комплексы
+
+    - category: Торговые комплексы
+      rubric_name: Торговые комплексы
+
+    - category: Остановки общественного транспорта
+      rubric_name: Остановки общественного транспорта
+
+    - category: Театры
+      rubric_name: Театры
+
+    - category: Музеи
+      rubric_name: Музеи
+
+    - category: Кинотеатры
+      rubric_name: Кинотеатры
+
+    - category: Стадионы
+      rubric_name: Стадионы / Спортивные арены
+
+analysis:
+  poi_radius_m: 1200
+  graph_dist_m: 1200
+  walk_speed_kph: 4.8
+  isochrone_minutes:
+    - 5
+    - 10
+    - 15
+
+city_centers:
+  ижевск:
+    name: Центр Ижевска / Центральная площадь
+    latitude: 56.8526
+    longitude: 53.2115
+
+city_center_search_queries:
+  - '{city}, Центральная площадь'
+  - '{city}, администрация города'
+  - '{city}, центр города'
+  - '{city}, центральная площадь'
+  - '{city}'
+
+benchmark:
+  district:
+    Инфраструктурная насыщенность:
+      low: 3.5
+      medium: 6.0
+      high: 8.0
+
+    Семейная пригодность:
+      low: 3.5
+      medium: 6.0
+      high: 8.0
+
+    Досуг и рекреация:
+      low: 3.0
+      medium: 5.5
+      high: 7.5
+
+    Транспортная доступность:
+      low: 3.5
+      medium: 6.0
+      high: 8.0
+
+    Функциональное разнообразие:
+      low: 3.5
+      medium: 6.0
+      high: 8.0
+
+    Проницаемость сети:
+      low: 3.5
+      medium: 6.0
+      high: 8.0
+
+    Энтропия функций:
+      low: 3.0
+      medium: 5.5
+      high: 7.5
+
+  city: {}
+
+weights: {}
+
+poi_classification: {}

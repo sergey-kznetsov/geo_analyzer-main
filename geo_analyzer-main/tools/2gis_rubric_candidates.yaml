@@ -1,0 +1,1491 @@
+city: Ижевск
+region_id: '41'
+region_name: Ижевск
+source: Official 2GIS Categories API /2.0/catalog/rubric/search
+categories:
+- category: Супермаркеты
+  status: found
+  selected_rubric_id: '350'
+  selected_rubric_name: Супермаркеты
+  aliases:
+  - Супермаркеты
+  candidates:
+  - rubric_id: '350'
+    rubric_name: Супермаркеты
+    title: Супермаркеты
+    caption: Супермаркеты
+    keyword: Супермаркеты
+    parent_id: '6547'
+    org_count: 38
+    branch_count: 770
+    source: item
+  - rubric_id: '9777'
+    rubric_name: Стройматериалы
+    title: Стройматериалы
+    caption: Стройматериалы
+    keyword: Стройматериалы
+    parent_id: '42867'
+    org_count: 260
+    branch_count: 353
+    source: item
+  - rubric_id: '12127'
+    rubric_name: Гипермаркеты
+    title: Гипермаркеты
+    caption: Гипермаркеты
+    keyword: Гипермаркеты
+    parent_id: '6547'
+    org_count: 7
+    branch_count: 15
+    source: item
+  - rubric_id: '112647'
+    rubric_name: Строительные гипермаркеты
+    title: Строительные гипермаркеты
+    caption: Строительные гипермаркеты
+    keyword: Строительные гипермаркеты
+    parent_id: '42867'
+    org_count: 4
+    branch_count: 4
+    source: item
+- category: Продуктовые магазины
+  status: found
+  selected_rubric_id: '373'
+  selected_rubric_name: Продуктовые магазины
+  aliases:
+  - Продуктовые магазины
+  - Продовольственные магазины
+  candidates:
+  - rubric_id: '350'
+    rubric_name: Супермаркеты
+    title: Супермаркеты
+    caption: Супермаркеты
+    keyword: Супермаркеты
+    parent_id: '6547'
+    org_count: 38
+    branch_count: 770
+    source: item
+  - rubric_id: '373'
+    rubric_name: Продуктовые магазины
+    title: Продуктовые магазины
+    caption: Продуктовые магазины
+    keyword: Продуктовые магазины
+    parent_id: '14'
+    org_count: 537
+    branch_count: 940
+    source: item
+  - rubric_id: '12127'
+    rubric_name: Гипермаркеты
+    title: Гипермаркеты
+    caption: Гипермаркеты
+    keyword: Гипермаркеты
+    parent_id: '6547'
+    org_count: 7
+    branch_count: 15
+    source: item
+  - rubric_id: '47633'
+    rubric_name: Доставка продуктов
+    title: Заказ товаров на дом
+    caption: Заказ товаров на дом
+    keyword: Доставка продуктов
+    parent_id: '6547'
+    org_count: 31
+    branch_count: 293
+    source: item
+- category: Аптеки
+  status: found
+  selected_rubric_id: '207'
+  selected_rubric_name: Аптеки
+  aliases:
+  - Аптеки
+  candidates:
+  - rubric_id: '207'
+    rubric_name: Аптеки
+    title: Аптеки
+    caption: Аптеки
+    keyword: Аптеки
+    parent_id: '5'
+    org_count: 48
+    branch_count: 597
+    source: item
+  - rubric_id: '204'
+    rubric_name: Ветеринарные аптеки
+    title: Ветеринарные аптеки
+    caption: Ветеринарные аптеки
+    keyword: Ветеринарные аптеки
+    parent_id: '746'
+    org_count: 37
+    branch_count: 75
+    source: item
+- category: Пункты выдачи заказов
+  status: found
+  selected_rubric_id: '112611'
+  selected_rubric_name: Пункты выдачи интернет-заказов
+  aliases:
+  - Пункты выдачи интернет-заказов
+  candidates:
+  - rubric_id: '112611'
+    rubric_name: Пункты выдачи интернет-заказов
+    title: Пункты выдачи интернет-заказов
+    caption: Пункты выдачи интернет-заказов
+    keyword: Пункты выдачи интернет-заказов
+    parent_id: '12'
+    org_count: 118
+    branch_count: 2044
+    source: item
+- category: Кофейни
+  status: found
+  selected_rubric_id: '162'
+  selected_rubric_name: Кофейни
+  aliases:
+  - Кофейни
+  candidates:
+  - rubric_id: '162'
+    rubric_name: Кофейни
+    title: Кофейни
+    caption: Кофейни
+    keyword: Кофейни
+    parent_id: '2'
+    org_count: 44
+    branch_count: 72
+    source: item
+  - rubric_id: '112719'
+    rubric_name: Кофейные автоматы
+    title: Кофейные автоматы
+    caption: Кофейные автоматы
+    keyword: Кофейные автоматы
+    parent_id: '2'
+    org_count: 252
+    branch_count: 480
+    source: item
+  - rubric_id: '396'
+    rubric_name: Посуда
+    title: Посуда
+    caption: Посуда
+    keyword: Посуда
+    parent_id: '11'
+    org_count: 120
+    branch_count: 181
+    source: item
+  - rubric_id: '379'
+    rubric_name: Бытовая техника
+    title: Бытовая техника
+    caption: Бытовая техника
+    keyword: Бытовая техника
+    parent_id: '3'
+    org_count: 106
+    branch_count: 181
+    source: item
+  - rubric_id: '58871'
+    rubric_name: Точки кофе
+    title: Точки кофе
+    caption: Точки кофе
+    keyword: Точки кофе
+    parent_id: '2'
+    org_count: 49
+    branch_count: 75
+    source: item
+- category: Пекарни
+  status: found
+  selected_rubric_id: '111594'
+  selected_rubric_name: Пекарни
+  aliases:
+  - Пекарни
+  candidates:
+  - rubric_id: '111594'
+    rubric_name: Пекарни
+    title: Пекарни
+    caption: Пекарни
+    keyword: Пекарни
+    parent_id: '2'
+    org_count: 128
+    branch_count: 232
+    source: item
+- category: Кафе
+  status: found
+  selected_rubric_id: '161'
+  selected_rubric_name: Кафе
+  aliases:
+  - Кафе
+  candidates:
+  - rubric_id: '161'
+    rubric_name: Кафе
+    title: Кафе
+    caption: Кафе
+    keyword: Кафе
+    parent_id: '2'
+    org_count: 277
+    branch_count: 333
+    source: item
+  - rubric_id: '165'
+    rubric_name: Быстрое питание
+    title: Быстрое питание
+    caption: Быстрое питание
+    keyword: Быстрое питание
+    parent_id: '2'
+    org_count: 301
+    branch_count: 463
+    source: item
+  - rubric_id: '538'
+    rubric_name: Керамическая плитка
+    title: Керамическая плитка
+    caption: Керамическая плитка
+    keyword: Керамическая плитка
+    parent_id: '42867'
+    org_count: 52
+    branch_count: 77
+    source: item
+  - rubric_id: '162'
+    rubric_name: Кофейни
+    title: Кофейни
+    caption: Кофейни
+    keyword: Кофейни
+    parent_id: '2'
+    org_count: 44
+    branch_count: 72
+    source: item
+  - rubric_id: '112658'
+    rubric_name: Кафе-кондитерские
+    title: Кафе-кондитерские
+    caption: Кафе-кондитерские
+    keyword: Кафе-кондитерские
+    parent_id: '2'
+    org_count: 14
+    branch_count: 24
+    source: item
+  - rubric_id: '113573'
+    rubric_name: Зоокафе
+    title: Зоокафе
+    caption: Зоокафе
+    keyword: Зоокафе
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '21387'
+    rubric_name: Караоке-залы
+    title: Караоке
+    caption: Караоке
+    keyword: Караоке-залы
+    parent_id: '2'
+    org_count: 35
+    branch_count: 35
+    source: item
+  - rubric_id: '178'
+    rubric_name: Компьютерные клубы
+    title: Компьютерные клубы
+    caption: Компьютерные клубы
+    keyword: Компьютерные клубы
+    parent_id: '19532'
+    org_count: 23
+    branch_count: 33
+    source: item
+  - rubric_id: '110357'
+    rubric_name: Центры паровых коктейлей
+    title: Паровые коктейли
+    caption: Паровые коктейли
+    keyword: Центры паровых коктейлей
+    parent_id: '2'
+    org_count: 41
+    branch_count: 46
+    source: item
+- category: Рестораны
+  status: found
+  selected_rubric_id: '164'
+  selected_rubric_name: Рестораны
+  aliases:
+  - Рестораны
+  candidates:
+  - rubric_id: '164'
+    rubric_name: Рестораны
+    title: Рестораны
+    caption: Рестораны
+    keyword: Рестораны
+    parent_id: '2'
+    org_count: 66
+    branch_count: 72
+    source: item
+  - rubric_id: '165'
+    rubric_name: Быстрое питание
+    title: Быстрое питание
+    caption: Быстрое питание
+    keyword: Быстрое питание
+    parent_id: '2'
+    org_count: 301
+    branch_count: 463
+    source: item
+  - rubric_id: '21387'
+    rubric_name: Караоке-залы
+    title: Караоке
+    caption: Караоке
+    keyword: Караоке-залы
+    parent_id: '2'
+    org_count: 35
+    branch_count: 35
+    source: item
+- category: Школы
+  status: found
+  selected_rubric_id: '245'
+  selected_rubric_name: Школы
+  aliases:
+  - Школы
+  candidates:
+  - rubric_id: '233'
+    rubric_name: Автошколы
+    title: Автошколы
+    caption: Автошколы
+    keyword: Автошколы
+    parent_id: '6'
+    org_count: 47
+    branch_count: 112
+    source: item
+  - rubric_id: '518'
+    rubric_name: Школы искусств
+    title: Школы искусств
+    caption: Школы искусств
+    keyword: Школы искусств
+    parent_id: '6'
+    org_count: 31
+    branch_count: 37
+    source: item
+  - rubric_id: '5683'
+    rubric_name: Центры раннего развития детей
+    title: Развитие детей
+    caption: Развитие детей
+    keyword: Центры раннего развития детей
+    parent_id: '6'
+    org_count: 177
+    branch_count: 223
+    source: item
+  - rubric_id: '4515'
+    rubric_name: Обучение танцам
+    title: Обучение танцам
+    caption: Обучение танцам
+    keyword: Обучение танцам
+    parent_id: '8'
+    org_count: 156
+    branch_count: 237
+    source: item
+  - rubric_id: '20228'
+    rubric_name: Центры йоги
+    title: Центры йоги
+    caption: Центры йоги
+    keyword: Центры йоги
+    parent_id: '8'
+    org_count: 65
+    branch_count: 76
+    source: item
+  - rubric_id: '110311'
+    rubric_name: Специальные школы
+    title: Специальные школы
+    caption: Специальные школы
+    keyword: Специальные школы
+    parent_id: '6'
+    org_count: 14
+    branch_count: 16
+    source: item
+  - rubric_id: '675'
+    rubric_name: Языковые школы
+    title: Языковые школы
+    caption: Языковые школы
+    keyword: Языковые школы
+    parent_id: '6'
+    org_count: 149
+    branch_count: 196
+    source: item
+  - rubric_id: '633'
+    rubric_name: Спортивные школы
+    title: Спортивные школы
+    caption: Спортивные школы
+    keyword: Спортивные школы
+    parent_id: '8'
+    org_count: 42
+    branch_count: 105
+    source: item
+  - rubric_id: '53598'
+    rubric_name: Курсы вокала
+    title: Курсы вокала
+    caption: Курсы вокала
+    keyword: Курсы вокала
+    parent_id: '6'
+    org_count: 36
+    branch_count: 39
+    source: item
+  - rubric_id: '56437'
+    rubric_name: Музыкальные курсы
+    title: Музыкальные курсы
+    caption: Музыкальные курсы
+    keyword: Музыкальные курсы
+    parent_id: '6'
+    org_count: 37
+    branch_count: 41
+    source: item
+  - rubric_id: '10135'
+    rubric_name: Школы для будущих мам
+    title: Школы для будущих мам
+    caption: Школы для будущих мам
+    keyword: Школы для будущих мам
+    parent_id: '5'
+    org_count: 3
+    branch_count: 7
+    source: item
+  - rubric_id: '687'
+    rubric_name: Школы-интернаты
+    title: Школы-интернаты
+    caption: Школы-интернаты
+    keyword: Школы-интернаты
+    parent_id: '6'
+    org_count: 2
+    branch_count: 2
+    source: item
+  - rubric_id: '16757'
+    rubric_name: Дизайнерские курсы
+    title: Дизайнерские курсы
+    caption: Дизайнерские курсы
+    keyword: Дизайнерские курсы
+    parent_id: '6'
+    org_count: 8
+    branch_count: 8
+    source: item
+  - rubric_id: '19080'
+    rubric_name: Фотошколы
+    title: Фотошколы
+    caption: Фотошколы
+    keyword: Фотошколы
+    parent_id: '6'
+    org_count: 6
+    branch_count: 6
+    source: item
+  - rubric_id: '51356'
+    rubric_name: Обучение массажистов
+    title: Обучение массажистов
+    caption: Обучение массажистов
+    keyword: Обучение массажистов
+    parent_id: '6'
+    org_count: 15
+    branch_count: 16
+    source: item
+  - rubric_id: '51645'
+    rubric_name: Повышение водительского мастерства
+    title: Повышение водительского мастерства
+    caption: Повышение водительского мастерства
+    keyword: Повышение водительского мастерства
+    parent_id: '6'
+    org_count: 3
+    branch_count: 3
+    source: item
+  - rubric_id: '55666'
+    rubric_name: Киношколы
+    title: Киношколы
+    caption: Киношколы
+    keyword: Киношколы
+    parent_id: '6'
+    org_count: 2
+    branch_count: 2
+    source: item
+  - rubric_id: '110368'
+    rubric_name: Курсы сомелье
+    title: Курсы сомелье
+    caption: Курсы сомелье
+    keyword: Курсы сомелье
+    parent_id: '6'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '110488'
+    rubric_name: Курсы груминга
+    title: Курсы груминга
+    caption: Курсы груминга
+    keyword: Курсы груминга
+    parent_id: '746'
+    org_count: 4
+    branch_count: 5
+    source: item
+  - rubric_id: '110999'
+    rubric_name: Медиашколы
+    title: Школы телевидения
+    caption: Школы телевидения
+    keyword: Медиашколы
+    parent_id: '6'
+    org_count: 4
+    branch_count: 4
+    source: item
+  - rubric_id: '243'
+    rubric_name: Детские музыкальные школы
+    title: Детские музыкальные школы
+    caption: Детские музыкальные школы
+    keyword: Детские музыкальные школы
+    parent_id: '6'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '51370'
+    rubric_name: Спортивно-интеллектуальные клубы
+    title: Спортивно-интеллектуальные клубы
+    caption: Спортивно-интеллектуальные клубы
+    keyword: Спортивно-интеллектуальные клубы
+    parent_id: '8'
+    org_count: 7
+    branch_count: 10
+    source: item
+  - rubric_id: '112654'
+    rubric_name: Кинологи
+    title: Кинологи
+    caption: Кинологи
+    keyword: Кинологи
+    parent_id: '746'
+    org_count: 5
+    branch_count: 5
+    source: item
+  - rubric_id: '112394'
+    rubric_name: Курсы робототехники
+    title: Курсы робототехники
+    caption: Курсы робототехники
+    keyword: Курсы робототехники
+    parent_id: '2'
+    org_count: 36
+    branch_count: 48
+    source: item
+  - rubric_id: '695'
+    rubric_name: Обучение мастеров для салонов красоты
+    title: Обучение мастеров для салонов красоты
+    caption: Обучение мастеров для салонов красоты
+    keyword: Обучение мастеров для салонов красоты
+    parent_id: '6'
+    org_count: 265
+    branch_count: 291
+    source: item
+  - rubric_id: '1181'
+    rubric_name: Помощь в обучении
+    title: Помощь в обучении
+    caption: Помощь в обучении
+    keyword: Помощь в обучении
+    parent_id: '6'
+    org_count: 122
+    branch_count: 161
+    source: item
+  - rubric_id: '51008'
+    rubric_name: Картинг
+    title: Картинг
+    caption: Картинг
+    keyword: Картинг
+    parent_id: '8'
+    org_count: 3
+    branch_count: 3
+    source: item
+  - rubric_id: '51646'
+    rubric_name: Авиаклубы
+    title: Авиаклубы
+    caption: Авиаклубы
+    keyword: Авиаклубы
+    parent_id: '8'
+    org_count: 2
+    branch_count: 2
+    source: item
+  - rubric_id: '678'
+    rubric_name: Компьютерные курсы
+    title: Компьютерные курсы
+    caption: Компьютерные курсы
+    keyword: Компьютерные курсы
+    parent_id: '6'
+    org_count: 34
+    branch_count: 43
+    source: item
+  - rubric_id: '53599'
+    rubric_name: Кулинарные курсы
+    title: Кулинарные курсы
+    caption: Кулинарные курсы
+    keyword: Кулинарные курсы
+    parent_id: '6'
+    org_count: 15
+    branch_count: 15
+    source: item
+  - rubric_id: '550'
+    rubric_name: Модельные агентства
+    title: Модельные агентства
+    caption: Модельные агентства
+    keyword: Модельные агентства
+    parent_id: '6'
+    org_count: 10
+    branch_count: 14
+    source: item
+  - rubric_id: '693'
+    rubric_name: Обучение бизнес-профессиям
+    title: Обучение бизнес-профессиям
+    caption: Обучение бизнес-профессиям
+    keyword: Обучение бизнес-профессиям
+    parent_id: '6'
+    org_count: 15
+    branch_count: 15
+    source: item
+  - rubric_id: '8151'
+    rubric_name: Дайвинг-клубы
+    title: Дайвинг-клубы
+    caption: Дайвинг-клубы
+    keyword: Дайвинг-клубы
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '15761'
+    rubric_name: Начальные школы-детские сады и прогимназии
+    title: Начальные школы
+    caption: Начальные школы
+    keyword: Начальные школы-детские сады и прогимназии
+    parent_id: '6'
+    org_count: 5
+    branch_count: 5
+    source: item
+  - rubric_id: '50532'
+    rubric_name: Актёрские курсы
+    title: Актёрские курсы
+    caption: Актёрские курсы
+    keyword: Актёрские курсы
+    parent_id: '6'
+    org_count: 18
+    branch_count: 20
+    source: item
+  - rubric_id: '110392'
+    rubric_name: Услуги аэрографии
+    title: Услуги аэрографии
+    caption: Услуги аэрографии
+    keyword: Услуги аэрографии
+    parent_id: '9'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '111539'
+    rubric_name: Обучение горнолыжному спорту
+    title: Обучение горнолыжному спорту
+    caption: Обучение горнолыжному спорту
+    keyword: Обучение горнолыжному спорту
+    parent_id: '8'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '112874'
+    rubric_name: Медитация
+    title: Медитация
+    caption: Медитация
+    keyword: Медитация
+    parent_id: '5'
+    org_count: 2
+    branch_count: 2
+    source: item
+  - rubric_id: '49787'
+    rubric_name: Кадетские школы
+    title: Кадетские школы
+    caption: Кадетские школы
+    keyword: Кадетские школы
+    parent_id: '6'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '245'
+    rubric_name: Школы
+    title: Школы
+    caption: Школы
+    keyword: Школы
+    parent_id: '6'
+    org_count: 178
+    branch_count: 200
+    source: item
+  - rubric_id: '381'
+    rubric_name: Канцтовары
+    title: Канцтовары
+    caption: Канцтовары
+    keyword: Канцтовары
+    parent_id: '11'
+    org_count: 206
+    branch_count: 288
+    source: item
+  - rubric_id: '110402'
+    rubric_name: Мотошколы
+    title: Мотошколы
+    caption: Мотошколы
+    keyword: Мотошколы
+    parent_id: '6'
+    org_count: 16
+    branch_count: 42
+    source: item
+  - rubric_id: '18574'
+    rubric_name: Воскресные школы
+    title: Воскресные школы
+    caption: Воскресные школы
+    keyword: Воскресные школы
+    parent_id: '4'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '110404'
+    rubric_name: Школьная форма
+    title: Школьная форма
+    caption: Школьная форма
+    keyword: Школьная форма
+    parent_id: '1035'
+    org_count: 28
+    branch_count: 39
+    source: item
+  - rubric_id: '67495'
+    rubric_name: Цирковые школы
+    title: Цирковые школы
+    caption: Цирковые школы
+    keyword: Цирковые школы
+    parent_id: '6'
+    org_count: 3
+    branch_count: 3
+    source: item
+  - rubric_id: '244'
+    rubric_name: Детские художественные школы
+    title: Детские художественные школы
+    caption: Детские художественные школы
+    keyword: Детские художественные школы
+    parent_id: '6'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '112657'
+    rubric_name: Гончарные мастерские
+    title: Гончарные мастерские
+    caption: Гончарные мастерские
+    keyword: Гончарные мастерские
+    parent_id: '4'
+    org_count: 17
+    branch_count: 18
+    source: item
+- category: Детские сады
+  status: found
+  selected_rubric_id: '237'
+  selected_rubric_name: Детские сады
+  aliases:
+  - Детские сады
+  candidates:
+  - rubric_id: '110405'
+    rubric_name: Частные детские сады
+    title: Частные детские сады
+    caption: Частные детские сады
+    keyword: Частные детские сады
+    parent_id: '6'
+    org_count: 30
+    branch_count: 39
+    source: item
+  - rubric_id: '15761'
+    rubric_name: Начальные школы-детские сады и прогимназии
+    title: Начальные школы
+    caption: Начальные школы
+    keyword: Начальные школы-детские сады и прогимназии
+    parent_id: '6'
+    org_count: 5
+    branch_count: 5
+    source: item
+  - rubric_id: '237'
+    rubric_name: Детские сады
+    title: Детские сады
+    caption: Детские сады
+    keyword: Детские сады
+    parent_id: '6'
+    org_count: 312
+    branch_count: 424
+    source: item
+  - rubric_id: '698'
+    rubric_name: Мебель для учебных учреждений
+    title: Мебель для школ, детсадов
+    caption: Мебель для школ, детсадов
+    keyword: Мебель для учебных учреждений
+    parent_id: '787'
+    org_count: 18
+    branch_count: 18
+    source: item
+- category: Детское дополнительное образование
+  status: found
+  selected_rubric_id: '5683'
+  selected_rubric_name: Центры раннего развития детей
+  aliases:
+  - Центры раннего развития детей
+  - Детские развивающие центры
+  - Детские / подростковые клубы
+  - Детские музыкальные школы
+  - Детские художественные школы
+  - Спортивные секции
+  candidates:
+  - rubric_id: '5683'
+    rubric_name: Центры раннего развития детей
+    title: Развитие детей
+    caption: Развитие детей
+    keyword: Центры раннего развития детей
+    parent_id: '6'
+    org_count: 177
+    branch_count: 223
+    source: item
+- category: Взрослое дополнительное образование
+  status: found
+  selected_rubric_id: '234'
+  selected_rubric_name: Переподготовка и повышение квалификации
+  aliases:
+  - Переподготовка и повышение квалификации
+  - Учебные центры
+  candidates:
+  - rubric_id: '234'
+    rubric_name: Переподготовка и повышение квалификации
+    title: Профессиональная переподготовка
+    caption: Профессиональная переподготовка
+    keyword: Переподготовка и повышение квалификации
+    parent_id: '6'
+    org_count: 147
+    branch_count: 154
+    source: item
+- category: Детские игровые центры
+  status: found
+  selected_rubric_id: '16743'
+  selected_rubric_name: Детские игровые залы
+  aliases:
+  - Детские игровые залы
+  candidates:
+  - rubric_id: '16743'
+    rubric_name: Детские игровые залы
+    title: Детские игровые залы
+    caption: Детские игровые залы
+    keyword: Детские игровые залы
+    parent_id: '2'
+    org_count: 48
+    branch_count: 48
+    source: item
+- category: Медицинские центры
+  status: found
+  selected_rubric_id: '4521'
+  selected_rubric_name: Многопрофильные медицинские центры
+  aliases:
+  - Многопрофильные медицинские центры
+  candidates:
+  - rubric_id: '4521'
+    rubric_name: Многопрофильные медицинские центры
+    title: Мед.центры
+    caption: Мед.центры
+    keyword: Многопрофильные медицинские центры
+    parent_id: '5'
+    org_count: 64
+    branch_count: 99
+    source: item
+- category: Поликлиники
+  status: found
+  selected_rubric_id: '224'
+  selected_rubric_name: Взрослые поликлиники
+  aliases:
+  - Поликлиники для взрослых
+  - Детские поликлиники
+  - Поликлиники
+  candidates:
+  - rubric_id: '224'
+    rubric_name: Взрослые поликлиники
+    title: Взрослые поликлиники
+    caption: Взрослые поликлиники
+    keyword: Взрослые поликлиники
+    parent_id: '5'
+    org_count: 27
+    branch_count: 70
+    source: item
+- category: Ветеринарные клиники
+  status: found
+  selected_rubric_id: '205'
+  selected_rubric_name: Ветеринарные клиники
+  aliases:
+  - Ветеринарные клиники
+  candidates:
+  - rubric_id: '205'
+    rubric_name: Ветеринарные клиники
+    title: Ветеринарные клиники
+    caption: Ветеринарные клиники
+    keyword: Ветеринарные клиники
+    parent_id: '746'
+    org_count: 52
+    branch_count: 69
+    source: item
+- category: Зоомагазины
+  status: found
+  selected_rubric_id: '380'
+  selected_rubric_name: Зоотовары
+  aliases:
+  - Зоотовары
+  candidates:
+  - rubric_id: '380'
+    rubric_name: Зоотовары
+    title: Зоотовары
+    caption: Зоотовары
+    keyword: Зоотовары
+    parent_id: '746'
+    org_count: 152
+    branch_count: 247
+    source: item
+- category: Фитнес-клубы
+  status: found
+  selected_rubric_id: '268'
+  selected_rubric_name: Фитнес-клубы
+  aliases:
+  - Фитнес-клубы
+  candidates:
+  - rubric_id: '268'
+    rubric_name: Фитнес-клубы
+    title: Фитнес-клубы
+    caption: Фитнес-клубы
+    keyword: Фитнес-клубы
+    parent_id: '8'
+    org_count: 126
+    branch_count: 145
+    source: item
+- category: Салоны красоты и парикмахерские
+  status: found
+  selected_rubric_id: '305'
+  selected_rubric_name: Парикмахерские
+  aliases:
+  - Парикмахерские
+  candidates:
+  - rubric_id: '305'
+    rubric_name: Парикмахерские
+    title: Парикмахерские
+    caption: Парикмахерские
+    keyword: Парикмахерские
+    parent_id: '5'
+    org_count: 818
+    branch_count: 876
+    source: item
+  - rubric_id: '110353'
+    rubric_name: Детские парикмахерские
+    title: Детские парикмахерские
+    caption: Детские парикмахерские
+    keyword: Детские парикмахерские
+    parent_id: '5'
+    org_count: 3
+    branch_count: 4
+    source: item
+  - rubric_id: '110998'
+    rubric_name: Барбершопы
+    title: Барбершопы
+    caption: Барбершопы
+    keyword: Барбершопы
+    parent_id: '5'
+    org_count: 64
+    branch_count: 81
+    source: item
+  - rubric_id: '16414'
+    rubric_name: Уход за животными
+    title: Уход за животными
+    caption: Уход за животными
+    keyword: Уход за животными
+    parent_id: '746'
+    org_count: 70
+    branch_count: 85
+    source: item
+  - rubric_id: '695'
+    rubric_name: Обучение мастеров для салонов красоты
+    title: Обучение мастеров для салонов красоты
+    caption: Обучение мастеров для салонов красоты
+    keyword: Обучение мастеров для салонов красоты
+    parent_id: '6'
+    org_count: 265
+    branch_count: 291
+    source: item
+  - rubric_id: '441'
+    rubric_name: Оборудование для салонов красоты
+    title: Оборудование для салонов красоты
+    caption: Оборудование для салонов красоты
+    keyword: Оборудование для салонов красоты
+    parent_id: '15'
+    org_count: 23
+    branch_count: 52
+    source: item
+  - rubric_id: '112679'
+    rubric_name: Мебель для салонов красоты
+    title: Мебель для салонов красоты
+    caption: Мебель для салонов красоты
+    keyword: Мебель для салонов красоты
+    parent_id: '787'
+    org_count: 8
+    branch_count: 8
+    source: item
+  - rubric_id: '47780'
+    rubric_name: Заточка режущих инструментов
+    title: Заточка режущих инструментов
+    caption: Заточка режущих инструментов
+    keyword: Заточка режущих инструментов
+    parent_id: '15'
+    org_count: 70
+    branch_count: 78
+    source: item
+- category: Ногтевые студии
+  status: found
+  selected_rubric_id: '5603'
+  selected_rubric_name: Ногтевые студии
+  aliases:
+  - Ногтевые студии
+  candidates:
+  - rubric_id: '5603'
+    rubric_name: Ногтевые студии
+    title: Маникюр и педикюр
+    caption: Маникюр и педикюр
+    keyword: Ногтевые студии
+    parent_id: '5'
+    org_count: 739
+    branch_count: 810
+    source: item
+- category: Химчистки
+  status: found
+  selected_rubric_id: '313'
+  selected_rubric_name: Химчистки одежды и текстиля
+  aliases:
+  - Химчистки одежды и текстиля
+  candidates:
+  - rubric_id: '313'
+    rubric_name: Химчистки одежды и текстиля
+    title: Химчистки
+    caption: Химчистки
+    keyword: Химчистки одежды и текстиля
+    parent_id: '10'
+    org_count: 32
+    branch_count: 64
+    source: item
+- category: Ремонт обуви
+  status: found
+  selected_rubric_id: '307'
+  selected_rubric_name: Ремонт обуви и кожгалантереи
+  aliases:
+  - Ремонт обуви и кожгалантереи
+  candidates:
+  - rubric_id: '307'
+    rubric_name: Ремонт обуви и кожгалантереи
+    title: Ремонт обуви, кожгалантереи
+    caption: Ремонт обуви, кожгалантереи
+    keyword: Ремонт обуви и кожгалантереи
+    parent_id: '1035'
+    org_count: 131
+    branch_count: 149
+    source: item
+- category: Ателье
+  status: found
+  selected_rubric_id: '302'
+  selected_rubric_name: Швейные ателье
+  aliases:
+  - Швейные ателье
+  candidates:
+  - rubric_id: '302'
+    rubric_name: Швейные ателье
+    title: Швейные ателье
+    caption: Швейные ателье
+    keyword: Швейные ателье
+    parent_id: '10'
+    org_count: 216
+    branch_count: 233
+    source: item
+- category: Ремонт техники
+  status: found
+  selected_rubric_id: '306'
+  selected_rubric_name: Ремонт и установка бытовой техники
+  aliases:
+  - Ремонт и установка бытовой техники
+  candidates:
+  - rubric_id: '306'
+    rubric_name: Ремонт и установка бытовой техники
+    title: Установка, ремонт бытовой техники
+    caption: Установка, ремонт бытовой техники
+    keyword: Ремонт и установка бытовой техники
+    parent_id: '3'
+    org_count: 102
+    branch_count: 112
+    source: item
+- category: Хозяйственные магазины
+  status: found
+  selected_rubric_id: '398'
+  selected_rubric_name: Хозтовары
+  aliases:
+  - Хозтовары
+  candidates:
+  - rubric_id: '398'
+    rubric_name: Хозтовары
+    title: Хозтовары
+    caption: Хозтовары
+    keyword: Хозтовары
+    parent_id: '11'
+    org_count: 322
+    branch_count: 515
+    source: item
+- category: Парки и скверы
+  status: found
+  selected_rubric_id: '168'
+  selected_rubric_name: Парки
+  aliases:
+  - Парки
+  candidates:
+  - rubric_id: '110821'
+    rubric_name: Парки динозавров
+    title: Парки динозавров
+    caption: Парки динозавров
+    keyword: Парки динозавров
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '168'
+    rubric_name: Парки
+    title: Парки
+    caption: Парки
+    keyword: Парки
+    parent_id: '2'
+    org_count: 38
+    branch_count: 38
+    source: item
+  - rubric_id: '112442'
+    rubric_name: Центры виртуальной реальности
+    title: Центры виртуальной реальности
+    caption: Центры виртуальной реальности
+    keyword: Центры виртуальной реальности
+    parent_id: '2'
+    org_count: 22
+    branch_count: 30
+    source: item
+  - rubric_id: '14426'
+    rubric_name: Верхняя одежда
+    title: Верхняя одежда
+    caption: Верхняя одежда
+    keyword: Верхняя одежда
+    parent_id: '1035'
+    org_count: 328
+    branch_count: 406
+    source: item
+  - rubric_id: '16743'
+    rubric_name: Детские игровые залы
+    title: Детские игровые залы
+    caption: Детские игровые залы
+    keyword: Детские игровые залы
+    parent_id: '2'
+    org_count: 48
+    branch_count: 48
+    source: item
+  - rubric_id: '110427'
+    rubric_name: Батутные центры
+    title: Батутные центры
+    caption: Батутные центры
+    keyword: Батутные центры
+    parent_id: '8'
+    org_count: 12
+    branch_count: 12
+    source: item
+  - rubric_id: '24169'
+    rubric_name: Ботанический сад
+    title: Ботанические сады
+    caption: Ботанические сады
+    keyword: Ботанический сад
+    parent_id: '2'
+    org_count: 3
+    branch_count: 3
+    source: item
+  - rubric_id: '167'
+    rubric_name: Зоопарк
+    title: Зоопарки
+    caption: Зоопарки
+    keyword: Зоопарк
+    parent_id: '2'
+    org_count: 4
+    branch_count: 4
+    source: item
+  - rubric_id: '60340'
+    rubric_name: Паркинги
+    title: Паркинги
+    caption: Паркинги
+    keyword: Паркинги
+    parent_id: '42903'
+    org_count: 48
+    branch_count: 207
+    source: item
+  - rubric_id: '110304'
+    rubric_name: Верёвочные парки
+    title: Верёвочные парки
+    caption: Верёвочные парки
+    keyword: Верёвочные парки
+    parent_id: '2'
+    org_count: 8
+    branch_count: 8
+    source: item
+  - rubric_id: '112595'
+    rubric_name: Хаски-центры
+    title: Хаски-центры
+    caption: Хаски-центры
+    keyword: Хаски-центры
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '536'
+    rubric_name: Троллейбусные депо
+    title: Троллейбусные депо
+    caption: Троллейбусные депо
+    keyword: Троллейбусные депо
+    parent_id: '12'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '110745'
+    rubric_name: Скейт-парки
+    title: Скейт-парк
+    caption: Скейт-парк
+    keyword: Скейт-парки
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '6505'
+    rubric_name: Стрелковые клубы
+    title: Стрелковые клубы
+    caption: Стрелковые клубы
+    keyword: Стрелковые клубы
+    parent_id: '2'
+    org_count: 9
+    branch_count: 9
+    source: item
+  - rubric_id: '110358'
+    rubric_name: Аттракционы
+    title: Аттракционы
+    caption: Аттракционы
+    keyword: Аттракционы
+    parent_id: '2'
+    org_count: 21
+    branch_count: 111
+    source: item
+  - rubric_id: '355'
+    rubric_name: Меха и кожа
+    title: Меха, кожа
+    caption: Меха, кожа
+    keyword: Меха и кожа
+    parent_id: '1035'
+    org_count: 30
+    branch_count: 40
+    source: item
+  - rubric_id: '53982'
+    rubric_name: Строительство автопаркингов
+    title: Строительство автопаркингов
+    caption: Строительство автопаркингов
+    keyword: Строительство автопаркингов
+    parent_id: '12'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '13796'
+    rubric_name: Бизнес-центры
+    title: Бизнес-центры
+    caption: Бизнес-центры
+    keyword: Бизнес-центры
+    parent_id: '9'
+    org_count: 67
+    branch_count: 68
+    source: item
+  - rubric_id: '4535'
+    rubric_name: Пассажирские транспортные предприятия
+    title: Пассажирские транспортные предприятия
+    caption: Пассажирские транспортные предприятия
+    keyword: Пассажирские транспортные предприятия
+    parent_id: '12'
+    org_count: 10
+    branch_count: 11
+    source: item
+  - rubric_id: '123'
+    rubric_name: Благоустройство улиц
+    title: Благоустройство улиц
+    caption: Благоустройство улиц
+    keyword: Благоустройство улиц
+    parent_id: '10'
+    org_count: 30
+    branch_count: 31
+    source: item
+  - rubric_id: '112444'
+    rubric_name: Центры подключения водителей
+    title: Центры подключения водителей
+    caption: Центры подключения водителей
+    keyword: Центры подключения водителей
+    parent_id: '6'
+    org_count: 17
+    branch_count: 20
+    source: item
+  - rubric_id: '4529'
+    rubric_name: Невролог
+    title: Невролог
+    caption: Невролог
+    keyword: Невролог
+    parent_id: '5'
+    org_count: 95
+    branch_count: 134
+    source: item
+- category: Торговые центры
+  status: found
+  selected_rubric_id: '611'
+  selected_rubric_name: Торговые центры
+  aliases:
+  - Торговые центры
+  candidates:
+  - rubric_id: '611'
+    rubric_name: Торговые центры
+    title: Торговые центры
+    caption: Торговые центры
+    keyword: Торговые центры
+    parent_id: '6547'
+    org_count: 170
+    branch_count: 174
+    source: item
+  - rubric_id: '19499'
+    rubric_name: Торгово-развлекательные центры
+    title: Торгово-развлекательные центры
+    caption: Торгово-развлекательные центры
+    keyword: Торгово-развлекательные центры
+    parent_id: '6547'
+    org_count: 6
+    branch_count: 7
+    source: item
+  - rubric_id: '110346'
+    rubric_name: ТЦ товаров для интерьера и ремонта
+    title: Для ремонта и интерьера
+    caption: Для ремонта и интерьера
+    keyword: ТЦ товаров для интерьера и ремонта
+    parent_id: '6547'
+    org_count: 11
+    branch_count: 11
+    source: item
+- category: Театры
+  status: found
+  selected_rubric_id: '199'
+  selected_rubric_name: Театры
+  aliases:
+  - Театры
+  candidates:
+  - rubric_id: '199'
+    rubric_name: Театры
+    title: Театры
+    caption: Театры
+    keyword: Театры
+    parent_id: '4'
+    org_count: 15
+    branch_count: 15
+    source: item
+  - rubric_id: '15707'
+    rubric_name: Творческие коллективы
+    title: Творческие коллективы
+    caption: Творческие коллективы
+    keyword: Творческие коллективы
+    parent_id: '2'
+    org_count: 37
+    branch_count: 58
+    source: item
+  - rubric_id: '55875'
+    rubric_name: Сценические декорации и бутафория
+    title: Декорации и бутафория
+    caption: Декорации и бутафория
+    keyword: Сценические декорации и бутафория
+    parent_id: '2'
+    org_count: 1
+    branch_count: 1
+    source: item
+  - rubric_id: '21497'
+    rubric_name: Билеты на мероприятия
+    title: Билеты на мероприятия
+    caption: Билеты на мероприятия
+    keyword: Билеты на мероприятия
+    parent_id: '2'
+    org_count: 3
+    branch_count: 8
+    source: item
+  - rubric_id: '53054'
+    rubric_name: Мебель для культурно-досуговых учреждений
+    title: Мебель для культурно-досуговых учреждений
+    caption: Мебель для культурно-досуговых учреждений
+    keyword: Мебель для культурно-досуговых учреждений
+    parent_id: '787'
+    org_count: 3
+    branch_count: 3
+    source: item
+- category: Музеи
+  status: found
+  selected_rubric_id: '193'
+  selected_rubric_name: Музеи
+  aliases:
+  - Музеи
+  candidates:
+  - rubric_id: '113326'
+    rubric_name: Интерактивные музеи
+    title: Интерактивные музеи
+    caption: Интерактивные музеи
+    keyword: Интерактивные музеи
+    parent_id: '4'
+    org_count: 5
+    branch_count: 5
+    source: item
+  - rubric_id: '193'
+    rubric_name: Музеи
+    title: Музеи
+    caption: Музеи
+    keyword: Музеи
+    parent_id: '4'
+    org_count: 48
+    branch_count: 50
+    source: item
+  - rubric_id: '190'
+    rubric_name: Художественные выставки
+    title: Художественные выставки
+    caption: Художественные выставки
+    keyword: Художественные выставки
+    parent_id: '4'
+    org_count: 17
+    branch_count: 18
+    source: item
+- category: Кинотеатры
+  status: found
+  selected_rubric_id: '192'
+  selected_rubric_name: Кинотеатры
+  aliases:
+  - Кинотеатры
+  candidates:
+  - rubric_id: '192'
+    rubric_name: Кинотеатры
+    title: Кинотеатры
+    caption: Кинотеатры
+    keyword: Кинотеатры
+    parent_id: '2'
+    org_count: 15
+    branch_count: 15
+    source: item
+  - rubric_id: '112637'
+    rubric_name: Онлайн-кинотеатры
+    title: Онлайн-кинотеатры
+    caption: Онлайн-кинотеатры
+    keyword: Онлайн-кинотеатры
+    parent_id: '19532'
+    org_count: 3
+    branch_count: 3
+    source: item
+  - rubric_id: '511'
+    rubric_name: Аудиотехника и видеотехника
+    title: Аудиотехника и видеотехника
+    caption: Аудиотехника и видеотехника
+    keyword: Аудиотехника и видеотехника
+    parent_id: '3'
+    org_count: 66
+    branch_count: 123
+    source: item
+  - rubric_id: '102044'
+    rubric_name: Киноаттракционы
+    title: Киноаттракционы
+    caption: Киноаттракционы
+    keyword: Киноаттракционы
+    parent_id: '2'
+    org_count: 3
+    branch_count: 4
+    source: item
+- category: Стадионы
+  status: found
+  selected_rubric_id: '634'
+  selected_rubric_name: Стадионы / Спортивные арены
+  aliases:
+  - Стадионы / Спортивные арены
+  candidates:
+  - rubric_id: '634'
+    rubric_name: Стадионы / Спортивные арены
+    title: Стадионы / Спортивные арены
+    caption: Стадионы / Спортивные арены
+    keyword: Стадионы / Спортивные арены
+    parent_id: '8'
+    org_count: 12
+    branch_count: 12
+    source: item
