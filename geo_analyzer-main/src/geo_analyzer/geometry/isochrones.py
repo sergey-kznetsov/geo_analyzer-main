@@ -124,7 +124,6 @@ def build_isochrones(
         range_label, range_label_ru и geometry.
     """
     del graph_dist_m
-    del walk_speed_kph
 
     minutes = _ensure_iterable_minutes(isochrone_minutes)
     client = DGISClient()
@@ -162,6 +161,9 @@ def build_isochrones(
         rows.append(
             {
                 "minutes": int(round(float(duration_sec) / 60)),
+                "center_latitude": float(latitude),
+                "center_longitude": float(longitude),
+                "walk_speed_kph": float(walk_speed_kph),
                 "geometry": geometry,
             }
         )

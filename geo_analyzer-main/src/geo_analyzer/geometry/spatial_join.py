@@ -142,6 +142,139 @@ def _distance_m(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return earth_radius_m * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
+def _safe_float(value: Any) -> float | None:
+    if value is None:
+        return None
+
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        pass
+
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _empty_joined(empty_columns: list[str], crs: str = "EPSG:4326") -> gpd.GeoDataFrame:
+    return gpd.GeoDataFrame(columns=empty_columns, geometry="geometry", crs=crs)
+
+
+def _fallback_attach_by_distance(
+    points: gpd.GeoDataFrame,
+    polygons: gpd.GeoDataFrame,
+    empty_columns: list[str],
+) -> gpd.GeoDataFrame:
+    """????????? ???????? POI ? ????? 0?5 / 5?10 / 10?15 ?? ??????????.
+
+    ???????????? ?????? ???? ??????? spatial join ?? ????????? 2GIS ?????? ?????.
+    ??? ???????? ????? ?? ????????, ????? POI ?????????, ???????? ?????????,
+    ?? ??-?? ?????????/CRS/?????????? ????????? ??? ??????? ?????? ?? ??????.
+    """
+    if points is None or points.empty or polygons is None or polygons.empty:
+        return _empty_joined(empty_columns, crs=str(getattr(points, "crs", None) or "EPSG:4326"))
+
+    center_lat = None
+    center_lon = None
+    speed_kph = None
+
+    for _, zone in polygons.iterrows():
+        center_lat = _safe_float(zone.get("center_latitude"))
+        center_lon = _safe_float(zone.get("center_longitude"))
+        speed_kph = _safe_float(zone.get("walk_speed_kph"))
+        if center_lat is not None and center_lon is not None:
+            break
+
+    if center_lat is None or center_lon is None:
+        try:
+            union = polygons.to_crs(epsg=4326).geometry.union_all()
+        except Exception:
+            union = polygons.to_crs(epsg=4326).unary_union
+
+        centroid = union.centroid
+        center_lat = float(centroid.y)
+        center_lon = float(centroid.x)
+
+    if speed_kph is None or speed_kph <= 0:
+        speed_kph = 4.8
+
+    meters_per_minute = float(speed_kph) * 1000.0 / 60.0
+
+    zones = polygons.sort_values("to_minutes" if "to_minutes" in polygons.columns else "minutes").copy()
+
+    rows: list[dict[str, Any]] = []
+
+    for _, poi in points.iterrows():
+        geometry = poi.geometry
+
+        if geometry is None or geometry.is_empty:
+            continue
+
+        lat = _safe_float(poi.get("??????"))
+        lon = _safe_float(poi.get("???????"))
+
+        if lat is None:
+            lat = float(geometry.y)
+
+        if lon is None:
+            lon = float(geometry.x)
+
+        distance_m = _distance_m(float(center_lat), float(center_lon), float(lat), float(lon))
+
+        for _, zone in zones.iterrows():
+            from_minutes = _safe_float(zone.get("from_minutes")) or 0.0
+            to_minutes = _safe_float(zone.get("to_minutes"))
+            if to_minutes is None:
+                to_minutes = _safe_float(zone.get("minutes"))
+
+            if to_minutes is None:
+                continue
+
+            lower_m = from_minutes * meters_per_minute
+            upper_m = to_minutes * meters_per_minute
+
+            if distance_m <= upper_m and (from_minutes <= 0 or distance_m > lower_m):
+                row = poi.to_dict()
+                row["?????_??????"] = int(round(to_minutes))
+                row["travel_time_min"] = int(round(to_minutes))
+                row["??_?????"] = int(round(from_minutes))
+                row["??_?????"] = int(round(to_minutes))
+                row["????????_???????????"] = f"{int(round(from_minutes))}-{int(round(to_minutes))}"
+                row["????_???????????"] = f"{int(round(from_minutes))}?{int(round(to_minutes))} ???"
+                row["accessibility_zone"] = row["????_???????????"]
+                row["_fallback_distance_m"] = round(distance_m, 1)
+                row["_isochrone_join_method"] = "distance_fallback"
+                rows.append(row)
+                break
+
+    if not rows:
+        return _empty_joined(empty_columns, crs=str(points.crs or "EPSG:4326"))
+
+    joined = gpd.GeoDataFrame(rows, geometry="geometry", crs=points.crs or "EPSG:4326")
+    joined["?????_??????"] = pd.to_numeric(joined["?????_??????"], errors="coerce").astype("Int64")
+    joined = joined.dropna(subset=["?????_??????"]).sort_values(["?????_??????"]).reset_index(drop=True)
+
+    if joined.empty:
+        return _empty_joined(empty_columns, crs=str(points.crs or "EPSG:4326"))
+
+    joined = _ensure_required_fields(joined)
+    joined["_base_poi_key"] = joined.apply(_deduplication_key, axis=1)
+    joined = (
+        joined.sort_values(["_base_poi_key", "?????_??????"])
+        .drop_duplicates(subset=["_base_poi_key"], keep="first")
+        .drop(columns=["_base_poi_key"], errors="ignore")
+        .reset_index(drop=True)
+    )
+    joined = _ensure_required_fields(joined)
+    joined = deduplicate_transport_stops(joined)
+    joined = deduplicate_same_poi(joined)
+    joined = _ensure_required_fields(joined)
+
+    return gpd.GeoDataFrame(joined, geometry="geometry", crs=points.crs or "EPSG:4326").reset_index(drop=True)
+
+
 def _join_unique(values: pd.Series) -> str | pd.NA:
     """Склеивает уникальные непустые значения через запятую."""
     unique_values: list[str] = []
