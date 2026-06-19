@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import os
 import queue
@@ -101,7 +101,7 @@ def _write_env_value(key: str, value: str) -> None:
     os.environ[key] = value
 
 
-SINGLE_STEPS = ["Геокодирование через 2GIS", "Построение контекста", "Загрузка POI через 2GIS Places", "Классификация POI", "Построение изохрон через 2GIS", "Привязка POI к изохронам", "Автомобильная доступность через 2GIS Routing", "Расчёт доступности и сетевых метрик", "Расчёт антидрайверов по категориям 2GIS", "Расчёт метрик, парковки и benchmark", "Визуализация", "Экспорт Excel и summary", "Сохранение meta.json"]
+SINGLE_STEPS = ["Геокодирование через 2GIS", "Построение контекста", "Загрузка POI через 2GIS Places", "Классификация POI", "Построение изохрон через 2GIS", "Привязка POI к изохронам", "Автомобильная доступность через 2GIS Routing", "Расчёт доступности и сетевых метрик", "Расчёт антидрайверов по категориям 2GIS", "Расчёт метрик и benchmark", "Визуализация", "Экспорт Excel и summary", "Сохранение meta.json"]
 COMPARISON_STEPS = ["Анализ Локации A", "Анализ Локации B", "Расчёт сравнения", "Экспорт comparison.xlsx", "Сравнение готово"]
 
 
@@ -147,9 +147,6 @@ class GeoAnalyzerApp(tk.Tk):
         self._summary_path: Path | None = None
         self._started_at: float | None = None
         self._step_widgets: list[dict[str, Any]] = []
-        self._parking_summary: list[dict[str, Any]] = []
-        self._parking_details: list[dict[str, Any]] = []
-        self._parking_text: str | None = None
         self._build_styles()
         self._build_ui()
         self._apply_mode()
@@ -295,10 +292,6 @@ class GeoAnalyzerApp(tk.Tk):
         self.summary_button.grid(row=0, column=2, sticky="ew", padx=6)
         self.zip_button = ttk.Button(buttons, text="Создать ZIP", command=self._create_zip)
         self.zip_button.grid(row=0, column=3, sticky="ew", padx=(6, 0))
-        self.parking_button = ttk.Button(buttons, text="Модуль парковок", command=self._show_parking)
-        self.parking_button.grid(row=1, column=0, columnspan=4, sticky="ew", pady=(8, 0))
-        self.parking_button.configure(state=tk.DISABLED)
-
     def _register_entry_clipboard(self, entry: ttk.Entry) -> None:
         entry.bind("<<Paste>>", lambda event, widget=entry: self._paste_into_entry(widget))
         entry.bind("<Control-v>", lambda event, widget=entry: self._paste_into_entry(widget))
@@ -380,8 +373,7 @@ class GeoAnalyzerApp(tk.Tk):
         self.result_label.configure(text="Результат ещё не сформирован", style="Muted.TLabel")
         self.result_folder_var.set("Папка: —")
         self._set_metrics_text("После запуска здесь появятся краткие метрики и ссылки на результат.")
-        self.open_folder_button.configure(state=tk.DISABLED); self.open_report_button.configure(state=tk.DISABLED); self.summary_button.configure(state=tk.DISABLED); self.zip_button.configure(state=tk.DISABLED); self.parking_button.configure(state=tk.DISABLED)
-        self._parking_summary = []; self._parking_details = []; self._parking_text = None
+        self.open_folder_button.configure(state=tk.DISABLED); self.open_report_button.configure(state=tk.DISABLED); self.summary_button.configure(state=tk.DISABLED); self.zip_button.configure(state=tk.DISABLED)
         for item in self._step_widgets:
             self._paint_step(item, status="pending")
 
@@ -403,7 +395,7 @@ class GeoAnalyzerApp(tk.Tk):
         self.start_button.configure(state=tk.DISABLED if running else tk.NORMAL)
         self.refresh_benchmark_check.configure(state=tk.DISABLED if running else tk.NORMAL)
         if running:
-            self.open_folder_button.configure(state=tk.DISABLED); self.open_report_button.configure(state=tk.DISABLED); self.summary_button.configure(state=tk.DISABLED); self.zip_button.configure(state=tk.DISABLED); self.parking_button.configure(state=tk.DISABLED)
+            self.open_folder_button.configure(state=tk.DISABLED); self.open_report_button.configure(state=tk.DISABLED); self.summary_button.configure(state=tk.DISABLED); self.zip_button.configure(state=tk.DISABLED)
 
     def _start(self) -> None:
         if self._is_running:
@@ -488,10 +480,7 @@ class GeoAnalyzerApp(tk.Tk):
         meta = data.get("meta", {}) if isinstance(data.get("meta"), dict) else {}
         quality_scores = self._normalize_quality_scores(data.get("quality_scores")); accessibility_rows = self._normalize_rows(data.get("accessibility_snapshot"))
         poi_count = int(data.get("poi_count", 0) or self._safe_len(data.get("pois")) or 0)
-        parking_gui_label = data.get("parking_gui_label") or meta.get("parking_gui_label")
-        self._parking_summary = self._normalize_rows(data.get("parking_supply_summary")); self._parking_details = self._normalize_rows(data.get("parking_details")); self._parking_text = data.get("parking_text_summary") or meta.get("parking_text_summary")
-        self.parking_button.configure(state=tk.NORMAL if (self._parking_summary or self._parking_details) else tk.DISABLED)
-        self._set_metrics_text(self._build_quick_metrics_text(meta, quality_scores, accessibility_rows, poi_count, str(parking_gui_label) if parking_gui_label else None) or "Краткие метрики не сформированы.")
+        self._set_metrics_text(self._build_quick_metrics_text(meta, quality_scores, accessibility_rows, poi_count) or "Краткие метрики не сформированы.")
 
     def _finish_comparison_success(self, payload: Any) -> None:
         result = payload if isinstance(payload, ComparisonResult) else None
@@ -557,14 +546,13 @@ class GeoAnalyzerApp(tk.Tk):
         if isinstance(value, dict): return [value]
         return []
 
-    def _build_quick_metrics_text(self, meta: dict[str, Any], quality_scores: dict[str, float], accessibility_rows: list[dict[str, Any]], poi_count: int, parking_gui_label: str | None = None) -> str:
+    def _build_quick_metrics_text(self, meta: dict[str, Any], quality_scores: dict[str, float], accessibility_rows: list[dict[str, Any]], poi_count: int) -> str:
         lines: list[str] = []
         lines.append(f"Адрес: {meta.get('resolved_address') or meta.get('source_label') or '—'}")
         if meta.get("city"): lines.append(f"Город: {meta.get('city')}")
         if quality_scores:
             avg_score = sum(quality_scores.values()) / len(quality_scores); best_name, best_value = max(quality_scores.items(), key=lambda x: x[1]); worst_name, worst_value = min(quality_scores.items(), key=lambda x: x[1])
             lines.append(f"Средняя оценка среды: {avg_score:.1f} / 10"); lines.append(f"Сильная метрика: {best_name} — {best_value:.1f}"); lines.append(f"Слабая метрика: {worst_name} — {worst_value:.1f}")
-        if parking_gui_label: lines.append(f"Парковка: {parking_gui_label}")
         lines.append(f"Всего POI в зоне анализа: {poi_count}")
         return "\n".join(lines)
 
@@ -585,13 +573,6 @@ class GeoAnalyzerApp(tk.Tk):
         window = tk.Toplevel(self); window.title("Summary"); window.geometry("820x560"); window.configure(bg=APP_BG)
         box = tk.Text(window, wrap=tk.WORD, bg=CARD_BG, fg=TEXT, relief=tk.FLAT, padx=14, pady=14, font=("Segoe UI", 10), highlightbackground=BORDER, highlightcolor=BORDER, highlightthickness=1)
         box.pack(fill=tk.BOTH, expand=True, padx=16, pady=16); box.insert(tk.END, text); box.configure(state=tk.DISABLED)
-
-    def _show_parking(self) -> None:
-        if not self._parking_summary and not self._parking_details: messagebox.showinfo("Парковки", "Данные по парковкам отсутствуют. Запустите анализ локации."); return
-        window = tk.Toplevel(self); window.title("Модуль парковок"); window.geometry("1040x640"); window.configure(bg=APP_BG)
-        tk.Label(window, text=self._parking_text or "Парковочная обеспеченность по зонам пешей доступности.", bg=APP_BG, fg=TEXT, wraplength=1000, justify="left", font=("Segoe UI", 10)).pack(fill=tk.X, padx=16, pady=(14, 8))
-        if self._parking_summary: self._build_table(window, self._parking_summary)
-        if self._parking_details: self._build_table(window, self._parking_details)
 
     def _build_table(self, parent: tk.Misc, rows: list[dict[str, Any]]) -> None:
         if not rows: return

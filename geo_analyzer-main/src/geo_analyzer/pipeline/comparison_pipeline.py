@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import shutil
@@ -33,9 +33,6 @@ KEY_SCORE_METRICS = [
     "Функциональное разнообразие",
     "Проницаемость сети",
     "Энтропия функций",
-    "Парковочный потенциал",
-    "Парковочный потенциал до 5 минут",
-    "Парковочный потенциал до 10 минут",
 ]
 
 
@@ -242,9 +239,6 @@ def extract_comparison_metrics(result: dict[str, Any]) -> dict[str, dict[str, An
             "балл",
             lower_is_better=True,
         )
-
-    parking = _first_non_empty_df(result.get("parking_supply_summary"), report_sheets.get("Парковочная обеспеченность"))
-    if not parking.empty:
         row_5 = _find_zone_row(parking, 5, ["0–5 минут", "0-5 минут", "0–5 мин", "0-5 мин"])
         row_10 = _find_zone_row(parking, 10, ["Итого до 10 минут", "0–10 минут", "0-10 минут", "до 10 минут"])
 
@@ -253,7 +247,6 @@ def extract_comparison_metrics(result: dict[str, Any]) -> dict[str, dict[str, An
             if score_5 is not None:
                 metrics["Парковочный потенциал до 5 минут"] = _metric(
                     "Парковка",
-                    "Парковочный потенциал до 5 минут",
                     score_5,
                     "балл",
                 )
@@ -264,7 +257,6 @@ def extract_comparison_metrics(result: dict[str, Any]) -> dict[str, dict[str, An
                 metrics["Парковочный потенциал"] = _metric("Парковка", "Парковочный потенциал", score_10, "балл")
                 metrics["Парковочный потенциал до 10 минут"] = _metric(
                     "Парковка",
-                    "Парковочный потенциал до 10 минут",
                     score_10,
                     "балл",
                 )
@@ -276,7 +268,6 @@ def extract_comparison_metrics(result: dict[str, Any]) -> dict[str, dict[str, An
             )
             metrics["Парковочных мест до 10 минут"] = _metric(
                 "Парковка",
-                "Парковочных мест до 10 минут",
                 _row_value(row_10, ["Парковочных_мест", "Взвешенных_парковочных_мест"]),
                 "шт.",
             )
@@ -570,21 +561,6 @@ def _find_zone_row(df: pd.DataFrame, minutes: int, aliases: list[str]) -> pd.Ser
             return subset.iloc[0]
 
     return None
-
-
-def _parking_score_from_row(row: pd.Series) -> float | None:
-    score = _row_value(row, ["Парковочный_потенциал_из_10", "Оценка_из_10", "Парковочный_коэффициент"])
-    if score is not None:
-        return score
-
-    parking_places = _row_value(row, ["Парковочных_мест", "Взвешенных_парковочных_мест"])
-    apartments = _row_value(row, ["Квартир_в_зоне", "Квартир_всего"])
-    if parking_places is None or apartments is None or apartments <= 0:
-        return None
-
-    return round(parking_places / (apartments * 0.8) * 10, 3)
-
-
 def _find_quality_metric(df: pd.DataFrame, metric_col: str, markers: list[str]) -> float | None:
     for _, row in df.iterrows():
         name = str(row.get(metric_col, "")).lower()

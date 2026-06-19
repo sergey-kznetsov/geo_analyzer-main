@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
@@ -77,9 +77,6 @@ def _prepare_summary_df(analysis_result: dict[str, Any], drive_metrics: dict[str
     accessibility = analysis_result.get("accessibility_snapshot", pd.DataFrame())
     attraction_summary = analysis_result.get("attraction_summary", pd.DataFrame())
     anti_driver_summary = analysis_result.get("anti_driver_summary", pd.DataFrame())
-    parking_supply_summary = analysis_result.get("parking_supply_summary", pd.DataFrame())
-    parking_text_summary = analysis_result.get("parking_text_summary")
-
     rows: list[dict[str, Any]] = [
         {"Раздел": "Общий вывод", "Показатель": "Текстовое саммари", "Значение": analysis_result.get("text_summary"), "Комментарий": "Краткая интерпретация результата анализа."},
         {"Раздел": "Вводные", "Показатель": "Адрес / метка", "Значение": meta.get("resolved_address"), "Комментарий": "Точка, по которой выполнен анализ."},
@@ -124,12 +121,6 @@ def _prepare_summary_df(analysis_result: dict[str, Any], drive_metrics: dict[str
             if "Тип_антидрайвера" in row.index and "Количество" in row.index
         )
         rows.append({"Раздел": "Антидрайверы", "Показатель": "Основные антидрайверы", "Значение": anti_text or "не выявлены", "Комментарий": "Факторы, снижающие качество среды."})
-
-    if parking_text_summary:
-        rows.append({"Раздел": "Парковочный потенциал", "Показатель": "Краткий вывод", "Значение": parking_text_summary, "Комментарий": "Оценка парковочного потенциала по данным 2GIS."})
-
-    if parking_supply_summary is not None and not parking_supply_summary.empty:
-        total_row = parking_supply_summary[parking_supply_summary["Зона"].astype(str).eq("Итого до 10 минут")] if "Зона" in parking_supply_summary.columns else pd.DataFrame()
         if not total_row.empty:
             row = total_row.iloc[0]
             rows.extend([
@@ -196,88 +187,6 @@ def _prepare_anti_driver_df(anti_driver_summary: pd.DataFrame | None) -> pd.Data
         if column not in data.columns:
             data[column] = pd.NA
     return data[columns].sort_values(["Суммарный_штраф", "Количество"], ascending=[False, False]).reset_index(drop=True)
-
-
-def _prepare_parking_supply_df(parking_supply_summary: pd.DataFrame | None) -> pd.DataFrame:
-    columns = [
-        "Зона", "Минут_пешком", "Жилых_домов", "Домов_с_проверенной_карточкой_2GIS",
-        "Домов_с_данными_по_квартирам", "Квартир_в_зоне", "Коэффициент_владения_авто",
-        "Расчётная_потребность_машиномест", "Парковочных_объектов", "Парковочных_объектов_всего",
-        "Парковочных_мест", "Парковочных_мест_точных_2GIS", "Парковочных_мест_оценочных",
-        "Бесплатных_мест", "Платных_мест", "Мест_с_неизвестным_типом", "Мест_по_покупке_аренде",
-        "Исключённых_парковок", "Взвешенных_парковочных_мест", "Взвешенный_коэффициент_мест_на_квартиру",
-        "Парковочный_коэффициент", "Парковочный_потенциал_из_10", "Оценка_из_10",
-        "Класс_парковочного_потенциала", "Класс_обеспеченности", "Комментарий",
-    ]
-    if parking_supply_summary is None or parking_supply_summary.empty:
-        return pd.DataFrame(columns=columns)
-    data = parking_supply_summary.copy()
-    if "Парковочный_потенциал_из_10" not in data.columns and "Оценка_из_10" in data.columns:
-        data["Парковочный_потенциал_из_10"] = data["Оценка_из_10"]
-    if "Парковочный_коэффициент" not in data.columns and "Оценка_из_10" in data.columns:
-        data["Парковочный_коэффициент"] = data["Оценка_из_10"]
-    if "Класс_парковочного_потенциала" not in data.columns and "Класс_обеспеченности" in data.columns:
-        data["Класс_парковочного_потенциала"] = data["Класс_обеспеченности"]
-    for column in columns:
-        if column not in data.columns:
-            data[column] = pd.NA
-    return data[columns].reset_index(drop=True)
-
-
-def _prepare_parking_details_df(parking_details: pd.DataFrame | None) -> pd.DataFrame:
-    columns = [
-        "Название", "Адрес", "Категория_2GIS", "Тип_парковки", "Доступность",
-        "Можно_купить_место", "Парковочных_мест", "Метод_расчёта_мест", "Данные_по_местам",
-        "Оценочное_значение", "Проверка_вместимости_2GIS", "Учитывается_в_расчёте",
-        "Причина_исключения", "Тип_связанного_объекта", "Логика_фильтрации", "Зона",
-        "Минут_пешком", "dgis_id",
-    ]
-    if parking_details is None or parking_details.empty:
-        return pd.DataFrame(columns=columns)
-    data = parking_details.copy()
-    for column in columns:
-        if column not in data.columns:
-            data[column] = pd.NA
-    data["Парковочных_мест"] = pd.to_numeric(data["Парковочных_мест"], errors="coerce").fillna(0).astype(int)
-    data["Минут_пешком"] = pd.to_numeric(data["Минут_пешком"], errors="coerce").astype("Int64")
-    return (
-        data[columns]
-        .sort_values(
-            ["Учитывается_в_расчёте", "Минут_пешком", "Тип_парковки", "Название"],
-            ascending=[False, True, True, True],
-        )
-        .reset_index(drop=True)
-    )
-
-
-def _prepare_residential_details_df(residential_details: pd.DataFrame | None) -> pd.DataFrame:
-    columns = [
-        "Адрес",
-        "Количество_подъездов",
-        "Этажей",
-        "Квартир_всего",
-        "Метод_расчёта",
-        "Данные_по_квартирам",
-        "Проверка_карточки_2GIS",
-        "Зона",
-        "Минут_пешком",
-        "dgis_id",
-    ]
-    if residential_details is None or residential_details.empty:
-        return pd.DataFrame(columns=columns)
-    data = residential_details.copy()
-    for column in columns:
-        if column not in data.columns:
-            data[column] = pd.NA
-    data["Квартир_всего"] = pd.to_numeric(data["Квартир_всего"], errors="coerce").fillna(0).astype(int)
-    data["Минут_пешком"] = pd.to_numeric(data["Минут_пешком"], errors="coerce").astype("Int64")
-    return (
-        data[columns]
-        .sort_values(["Минут_пешком", "Адрес"], ascending=[True, True], na_position="last")
-        .reset_index(drop=True)
-    )
-
-
 def _prepare_network_metrics_df(network_metrics: pd.DataFrame | None) -> pd.DataFrame:
     columns = ["Метрика", "Значение", "Пояснение", "Шкала_оценки"]
     if network_metrics is None or network_metrics.empty:
@@ -346,9 +255,6 @@ def export_report_to_excel(
         "POI по изохронам": _prepare_poi_iso_df(analysis_result.get("poi_details_by_iso", pd.DataFrame())),
         "Точки притяжения": _prepare_attraction_points_df(analysis_result.get("attraction_points", pd.DataFrame())),
         "Антидрайверы": _prepare_anti_driver_df(analysis_result.get("anti_driver_summary", pd.DataFrame())),
-        "Парковочная обеспеченность": _prepare_parking_supply_df(analysis_result.get("parking_supply_summary", pd.DataFrame())),
-        "Детализация парковок": _prepare_parking_details_df(analysis_result.get("parking_details", pd.DataFrame())),
-        "Детализация домов": _prepare_residential_details_df(analysis_result.get("residential_details", pd.DataFrame())),
         "Бенчмарки": _prepare_benchmark_df(analysis_result.get("benchmark_summary", pd.DataFrame())),
         "Сетевые метрики": _prepare_network_metrics_df(analysis_result.get("network_metrics", pd.DataFrame())),
     }

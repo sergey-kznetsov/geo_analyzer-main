@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import pandas as pd
 from openpyxl import load_workbook
@@ -71,20 +71,6 @@ def test_excel_report_contains_new_accessibility_columns(tmp_path: Path):
             ]
         ),
         "attraction_points": pd.DataFrame(),
-        "parking_details": pd.DataFrame(
-            [
-                {
-                    "Название": "Парковка ТЦ Радуга",
-                    "Тип_парковки": "Исключена из расчёта",
-                    "Парковочных_мест": 0,
-                    "Учитывается_в_расчёте": "Нет",
-                    "Причина_исключения": "Парковка относится к объекту категории: Торговля",
-                    "Тип_связанного_объекта": "Торговля",
-                    "Логика_фильтрации": "excluded_non_residential_owner",
-                    "Минут_пешком": 5,
-                }
-            ]
-        ),
         "anti_driver_summary": pd.DataFrame(),
         "benchmark_summary": pd.DataFrame(),
         "network_metrics": pd.DataFrame(),
@@ -123,20 +109,10 @@ def test_excel_report_contains_new_accessibility_columns(tmp_path: Path):
         "POI по изохронам",
         "Точки притяжения",
         "Антидрайверы",
-        "Парковочная обеспеченность",
-        "Детализация парковок",
         "Бенчмарки",
         "Сетевые метрики",
     }
     assert expected_sheets.issubset(set(workbook.sheetnames))
-
-    # Детализация парковок должна показывать причину учёта/исключения (PR #2).
-    parking_sheet = workbook["Детализация парковок"]
-    parking_headers = [cell.value for cell in parking_sheet[1]]
-    assert "Учитывается_в_расчёте" in parking_headers
-    assert "Тип_связанного_объекта" in parking_headers
-    assert "Логика_фильтрации" in parking_headers
-
     # Доступность теперь сворачивается в отдельную строку листа "Саммари",
     # а авто-метрики берутся из drive_metrics.
     summary_sheet = workbook["Саммари"]

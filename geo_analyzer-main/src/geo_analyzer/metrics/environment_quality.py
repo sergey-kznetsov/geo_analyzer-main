@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from typing import Any
 
@@ -285,27 +285,6 @@ def _anti_driver_penalty_0_10(anti_driver_penalty: int | float) -> float:
     return max(0.0, min(3.0, float(anti_driver_penalty) / 12))
 
 
-def _parking_score(parking_supply_summary: pd.DataFrame | None) -> float | None:
-    if parking_supply_summary is None or parking_supply_summary.empty:
-        return None
-    if "Зона" not in parking_supply_summary.columns:
-        return None
-    data = parking_supply_summary.copy()
-    zone_text = data["Зона"].astype(str).str.replace("ё", "е").str.lower()
-    preferred = data[zone_text.eq("итого до 10 минут")]
-    if preferred.empty:
-        preferred = data[zone_text.str.contains("10", na=False)]
-    if preferred.empty:
-        preferred = data
-    for column in ["Парковочный_потенциал_из_10", "Оценка_из_10", "Парковочный_коэффициент"]:
-        if column not in preferred.columns:
-            continue
-        values = pd.to_numeric(preferred[column], errors="coerce").dropna()
-        if not values.empty:
-            return _score_0_10(float(values.iloc[0]))
-    return None
-
-
 def build_quality_scores(
     poi_counts_by_iso: pd.DataFrame | None,
     category_summary: pd.DataFrame | None,
@@ -365,7 +344,6 @@ def build_quality_scores(
     transport_score = _transport_score(accessibility_snapshot, poi_counts, network_metrics=network_metrics)
     diversity_score = _category_diversity_score(category_summary)
     entropy_score = _entropy_score(category_summary)
-    parking_score = _parking_score(parking_supply_summary)
     anti_penalty = _anti_driver_penalty_0_10(anti_driver_penalty)
 
     infra_score = _score_0_10(
@@ -484,20 +462,4 @@ def build_quality_scores(
             "Шкала_оценки": "0–3 среда однотипная, 3–6 умеренно разнообразная, 6–8 разнообразная, 8–10 максимально сбалансированная.",
         },
     ]
-
-    if parking_score is not None:
-        rows.append(
-            {
-                "Метрика": "Парковочный потенциал",
-                "Оценка_из_10": parking_score,
-                "Пояснение": (
-                    "Показывает парковочный потенциал до 10 минут по формуле: "
-                    "парковочные места / (квартиры × 0.8) × 10. "
-                    "Если 2GIS не отдаёт прямые квартиры или вместимость парковок, "
-                    "используется расчётная оценка по найденным домам и типу парковки."
-                ),
-                "Шкала_оценки": "0–3 низкий, 4–7 средний, 8–10 высокий парковочный потенциал.",
-            }
-        )
-
     return pd.DataFrame(rows)

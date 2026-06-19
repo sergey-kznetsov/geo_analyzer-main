@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 """Preflight discovery for 2GIS regional categories and object fields.
 
@@ -37,10 +37,6 @@ PREFLIGHT_SLEEP_SEC = 0.08
 TYPED_OBJECTS = {
     "station": STATION_FIELDS,
     "station_platform": STATION_FIELDS,
-    "parking": (
-        PLACE_DETAIL_FIELDS
-        + ",items.access,items.access_comment,items.access_name,items.access_type,items.capacity,items.is_paid,items.cost,items.parking,items.level_count,items.routes,items.platforms"
-    ),
     "building": (
         PLACE_DETAIL_FIELDS
         + ",items.floors,items.floor_count,items.structure_info,items.structure_info.apartments_count,items.structure_info.porch_count,items.has_apartments_info,items.links.database_entrances.apartments_info,items.purpose_code"
