@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import time
 from typing import Any, Callable
 
@@ -14,9 +13,7 @@ from geo_analyzer.geometry.isochrones import build_isochrones
 from geo_analyzer.geometry.spatial_join import attach_isochrone_counts, build_poi_details_by_isochrones
 from geo_analyzer.ingestion.dgis.city_center_resolver import resolve_city_center
 from geo_analyzer.ingestion.dgis.geocoder import DGISGeocoder
-from geo_analyzer.ingestion.dgis.places_enriched_loader import load_places_near_point
-from geo_analyzer.ingestion.dgis.preflight import run_dgis_preflight
-from geo_analyzer.ingestion.dgis.region_runtime_patch import ENV_REGION_ID, ENV_REGION_NAME
+from geo_analyzer.ingestion.dgis.places_loader import load_places_near_point
 from geo_analyzer.ingestion.dgis.routing_loader import get_drive_metrics
 from geo_analyzer.metrics.accessibility import build_accessibility_snapshot
 from geo_analyzer.metrics.anti_driver_score import build_anti_driver_summary, calculate_anti_driver_penalty, detect_anti_drivers
@@ -35,6 +32,7 @@ try:
 except ImportError:
     from geo_analyzer.enrichment.poi_classifier import classify_pois
 
+
 logger = get_logger("geo_analyzer.pipeline.compact")
 ProgressCallback = Callable[..., None] | None
 
@@ -43,31 +41,26 @@ def progress(cb: ProgressCallback, step: int, total: int, msg: str) -> None:
     print(f"[{step}/{total}] {msg}", flush=True)
     if cb is None:
         return
-    try:
-        cb(step, total, msg)
-    except TypeError:
+    variants = [
+        (step, total, msg),
+        (step, msg),
+        (msg,),
+        ({"step": step, "total": total, "percent": round(step / total * 100), "message": msg},),
+    ]
+    for args in variants:
         try:
-            cb(msg)
+            cb(*args)
+            return
+        except TypeError:
+            continue
         except Exception:
-            pass
-    except Exception:
-        pass
+            return
 
 
 def done(name: str, started: float) -> None:
-    print(f"[OK] {name}: {time.perf_counter() - started:.2f} сек", flush=True)
-
-
-def _bind_runtime_region(location: ResolvedLocation) -> None:
-    region_id = str(location.region_id or "").strip()
-    if region_id:
-        os.environ[ENV_REGION_ID] = region_id
-        os.environ[ENV_REGION_NAME] = str(location.region_name or "").strip()
-        logger.info("2GIS runtime region bound from geocoder: region_id=%s region_name=%s", region_id, location.region_name or "")
-    else:
-        os.environ.pop(ENV_REGION_ID, None)
-        os.environ.pop(ENV_REGION_NAME, None)
-        logger.warning("2GIS geocoder did not return items.region_id; runtime will probe region by coordinates.")
+    elapsed = time.perf_counter() - started
+    print(f"[OK] {name}: {elapsed:.2f} сек", flush=True)
+    logger.info("%s: %.2f сек", name, elapsed)
 
 
 def resolve_location(location_input: LocationInput) -> ResolvedLocation:
@@ -90,9 +83,37 @@ def resolve_location(location_input: LocationInput) -> ResolvedLocation:
     )
 
 
+def _extract_city_from_location(location: ResolvedLocation) -> str | None:
+    for value in [location.region_name, location.resolved_address, location.source_label]:
+        text = str(value or "").strip()
+        if not text:
+            continue
+        lowered = text.lower()
+        if "ижевск" in lowered:
+            return "Ижевск"
+    return None
+
+
+def _copy_if_possible(value: Any) -> Any:
+    try:
+        return value.copy()
+    except Exception:
+        return value
+
+
 def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCallback = None) -> dict[str, Any]:
+    """Run stable Geo Analyzer pipeline.
+
+    This runtime intentionally uses the old working mechanics:
+    geocode -> context -> fixed-rubric POI -> classification -> walking isochrones ->
+    spatial join -> routing to city center -> accessibility/network -> anti-drivers ->
+    attraction/quality/benchmark -> visuals/export.
+
+    Parking is not calculated. 2GIS preflight, all-catalog probing, enriched detail-card
+    wrappers and other experimental facades are not used here.
+    """
     total_started = time.perf_counter()
-    total = 14
+    total = 12
 
     validate_location_input(location_input.address, location_input.latitude, location_input.longitude)
     settings = get_settings()
@@ -100,7 +121,6 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
     progress(progress_callback, 1, total, "Геокодирование через 2GIS")
     started = time.perf_counter()
     location = resolve_location(location_input)
-    _bind_runtime_region(location)
     done("Геокодирование", started)
 
     progress(progress_callback, 2, total, "Построение контекста")
@@ -108,22 +128,21 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
     context = build_analysis_context(location)
     done("Построение контекста", started)
 
-    progress(progress_callback, 3, total, "Preflight 2GIS: рубрикатор и поля API")
+    progress(progress_callback, 3, total, "Загрузка POI через 2GIS Places")
     started = time.perf_counter()
-    preflight = run_dgis_preflight(location.latitude, location.longitude, settings.poi_radius_m, region_id=location.region_id)
-    done("Preflight 2GIS", started)
-
-    progress(progress_callback, 4, total, "Загрузка и обогащение POI через 2GIS Places")
-    started = time.perf_counter()
-    pois_raw = load_places_near_point(location.latitude, location.longitude, settings.poi_radius_m, region_id=location.region_id)
+    pois_raw = load_places_near_point(
+        location.latitude,
+        location.longitude,
+        radius_m=settings.poi_radius_m,
+    )
     done(f"Загрузка POI ({len(pois_raw)})", started)
 
-    progress(progress_callback, 5, total, "Классификация POI")
+    progress(progress_callback, 4, total, "Классификация POI")
     started = time.perf_counter()
     pois = classify_pois(pois_raw)
     done("Классификация POI", started)
 
-    progress(progress_callback, 6, total, "Построение изохрон через 2GIS")
+    progress(progress_callback, 5, total, "Построение изохрон через 2GIS")
     started = time.perf_counter()
     isochrones = build_isochrones(
         location.latitude,
@@ -134,45 +153,43 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
     )
     done(f"Построение изохрон ({len(isochrones)})", started)
 
-    progress(progress_callback, 7, total, "Привязка POI к изохронам")
+    progress(progress_callback, 6, total, "Привязка POI к изохронам")
     started = time.perf_counter()
     poi_counts = attach_isochrone_counts(pois, isochrones)
     poi_details = build_poi_details_by_isochrones(pois, isochrones)
     done("Привязка POI", started)
 
-    progress(progress_callback, 8, total, "Автомобильная доступность через 2GIS Routing")
+    progress(progress_callback, 7, total, "Автомобильная доступность через 2GIS Routing")
     started = time.perf_counter()
     center = resolve_city_center(location)
+    city_name = center.get("city") if isinstance(center, dict) else None
+    if not city_name:
+        city_name = _extract_city_from_location(location)
     drive = get_drive_metrics(
         location.latitude,
         location.longitude,
-        center_latitude=center.get("latitude"),
-        center_longitude=center.get("longitude"),
-        center_name=center.get("name"),
-        center_city=center.get("city"),
-        center_source=center.get("source"),
+        center_latitude=center.get("latitude") if isinstance(center, dict) else None,
+        center_longitude=center.get("longitude") if isinstance(center, dict) else None,
+        center_name=center.get("name") if isinstance(center, dict) else None,
+        center_city=center.get("city") if isinstance(center, dict) else None,
+        center_source=center.get("source") if isinstance(center, dict) else None,
     )
     done("Автомобильная доступность", started)
 
-    progress(progress_callback, 9, total, "Расчёт доступности и сетевых метрик")
+    progress(progress_callback, 8, total, "Расчёт доступности и сетевых метрик")
     started = time.perf_counter()
     access = build_accessibility_snapshot(poi_counts, poi_details, drive_metrics=drive)
     network = build_network_metrics(isochrones, poi_counts)
     done("Доступность и сеть", started)
 
-    progress(progress_callback, 10, total, "Расчёт антидрайверов")
+    progress(progress_callback, 9, total, "Расчёт антидрайверов по категориям 2GIS")
     started = time.perf_counter()
-    anti = detect_anti_drivers(
-        poi_details,
-        latitude=location.latitude,
-        longitude=location.longitude,
-        radius_m=settings.poi_radius_m,
-    )
+    anti = detect_anti_drivers(poi_details, latitude=location.latitude, longitude=location.longitude, radius_m=settings.poi_radius_m)
     anti_summary = build_anti_driver_summary(anti)
     penalty = calculate_anti_driver_penalty(anti_summary)
     done("Антидрайверы", started)
 
-    progress(progress_callback, 11, total, "Расчёт метрик и benchmark")
+    progress(progress_callback, 10, total, "Расчёт метрик и benchmark")
     started = time.perf_counter()
     category = build_category_summary(poi_details)
     attraction_summary, attraction_points = compute_attraction_score(
@@ -189,11 +206,18 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
         accessibility_snapshot=access,
     )
     benchmark = get_or_create_city_benchmark(
-        center.get("city"),
+        city_name,
         quality,
         force_refresh=bool(settings.refresh_city_benchmark),
         source_address=location.resolved_address or location.source_label,
-        parameters={},
+        parameters={
+            "poi_radius_m": settings.poi_radius_m,
+            "graph_dist_m": settings.graph_dist_m,
+            "isochrones_minutes": list(settings.isochrone_minutes),
+            "walk_speed_kph": settings.walk_speed_kph,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+        },
     )
     benchmark_summary = build_benchmark_summary(quality, city_benchmark=benchmark)
     text = build_text_summary(
@@ -216,16 +240,22 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
             "resolved_address": location.resolved_address or location.source_label,
             "latitude": location.latitude,
             "longitude": location.longitude,
+            "poi_radius_m": settings.poi_radius_m,
+            "graph_dist_m": settings.graph_dist_m,
+            "isochrones_minutes": list(settings.isochrone_minutes),
+            "walk_speed_kph": settings.walk_speed_kph,
             "provider": "2GIS",
             "region_id": location.region_id,
             "region_name": location.region_name,
-            "city": center.get("city"),
+            "city": city_name,
             "city_center": center,
-            "isochrones_minutes": settings.isochrone_minutes,
-            "dgis_preflight": preflight,
+            "city_benchmark": benchmark.get("meta") if isinstance(benchmark, dict) else None,
+            "quality_score_scale": "0-10",
+            "result_dir": str(context.result_dir),
+            "report_path": str(context.report_path),
+            "summary_path": str(context.summary_path),
         },
-        "dgis_preflight": preflight,
-        "pois_raw": pois_raw,
+        "pois_raw": _copy_if_possible(pois_raw),
         "pois": pois,
         "isochrones": isochrones,
         "poi_counts_by_iso": poi_counts,
@@ -245,25 +275,21 @@ def run_analysis(location_input: LocationInput, *, progress_callback: ProgressCa
         "text_summary": text,
     }
 
-    progress(progress_callback, 12, total, "Визуализация")
+    progress(progress_callback, 11, total, "Визуализация")
     started = time.perf_counter()
     visuals = export_visuals(result, context.images_dir)
     visuals = visuals if isinstance(visuals, dict) else {}
     done("Визуализация", started)
 
-    progress(progress_callback, 13, total, "Экспорт Excel и summary")
+    progress(progress_callback, 12, total, "Экспорт Excel и summary")
     started = time.perf_counter()
     export_report_to_excel(result, visuals, "", context.report_path)
     export_text_summary(text, context.summary_path)
-    done("Экспорт", started)
-
-    progress(progress_callback, 14, total, "Сохранение meta.json")
-    started = time.perf_counter()
     (context.result_dir / "meta.json").write_text(
         json.dumps(result["meta"], ensure_ascii=False, indent=2, default=str),
         encoding="utf-8",
     )
-    done("meta.json", started)
+    done("Экспорт", started)
 
     progress(progress_callback, total, total, "Готово")
     print(f"[DONE] Анализ завершён за {time.perf_counter() - total_started:.2f} сек", flush=True)
