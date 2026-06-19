@@ -2,130 +2,137 @@ dgis:
   catalog_url: https://catalog.api.2gis.com
   routing_url: https://routing.api.2gis.com
   timeout: 30
-
-  # region_id ниже — только fallback. Основной режим:
-  # 1) геокодирование адреса;
-  # 2) определение region_id по координатам точки через 2GIS region/get;
-  # 3) получение официального списка рубрик этого региона через rubric/list;
-  # 4) загрузка POI по rubric_id.
+  places_page_size: 10
+  places_max_pages: 3
   region_id: '41'
   region_name: Ижевск
-
-  places_page_size: 10
-
-  # Верхний предел страниц на одну рубрику.
-  # 2GIS обычно ограничивает page_size, поэтому для крупных городов лучше держать запас.
-  places_max_pages: 50
-
-  category_catalog_locale: ru_RU
-  strict_category_catalog: true
-
-  # Здесь задаются только человекочитаемые названия рубрик.
-  # rubric_id не фиксируем в конфиге, потому что он зависит от region_id.
   place_queries:
     - category: Супермаркеты
+      rubric_id: '350'
       rubric_name: Супермаркеты
 
     - category: Продуктовые магазины
+      rubric_id: '373'
       rubric_name: Продуктовые магазины
 
     - category: Аптеки
+      rubric_id: '207'
       rubric_name: Аптеки
 
     - category: Пункты выдачи заказов
+      rubric_id: '112611'
       rubric_name: Пункты выдачи интернет-заказов
 
     - category: Кофейни
+      rubric_id: '162'
       rubric_name: Кофейни
 
     - category: Пекарни
+      rubric_id: '111594'
       rubric_name: Пекарни
 
     - category: Кафе
+      rubric_id: '161'
       rubric_name: Кафе
 
     - category: Рестораны
+      rubric_id: '164'
       rubric_name: Рестораны
 
     - category: Школы
+      rubric_id: '245'
       rubric_name: Школы
 
     - category: Детские сады
+      rubric_id: '237'
       rubric_name: Детские сады
 
     - category: Детское дополнительное образование
+      rubric_id: '5683'
       rubric_name: Центры раннего развития детей
 
     - category: Взрослое дополнительное образование
+      rubric_id: '234'
       rubric_name: Переподготовка и повышение квалификации
 
     - category: Детские игровые центры
+      rubric_id: '16743'
       rubric_name: Детские игровые залы
 
     - category: Медицинские центры
+      rubric_id: '4521'
       rubric_name: Многопрофильные медицинские центры
 
     - category: Поликлиники
+      rubric_id: '224'
       rubric_name: Взрослые поликлиники
 
     - category: Ветеринарные клиники
+      rubric_id: '205'
       rubric_name: Ветеринарные клиники
 
     - category: Зоомагазины
+      rubric_id: '380'
       rubric_name: Зоотовары
 
     - category: Фитнес-клубы
+      rubric_id: '268'
       rubric_name: Фитнес-клубы
 
     - category: Салоны красоты и парикмахерские
+      rubric_id: '305'
       rubric_name: Парикмахерские
 
     - category: Ногтевые студии
+      rubric_id: '5603'
       rubric_name: Ногтевые студии
 
     - category: Химчистки
+      rubric_id: '313'
       rubric_name: Химчистки одежды и текстиля
 
     - category: Ремонт обуви
+      rubric_id: '307'
       rubric_name: Ремонт обуви и кожгалантереи
 
     - category: Ателье
+      rubric_id: '302'
       rubric_name: Швейные ателье
 
     - category: Ремонт техники
+      rubric_id: '306'
       rubric_name: Ремонт и установка бытовой техники
 
     - category: Хозяйственные магазины
+      rubric_id: '398'
       rubric_name: Хозтовары
 
     - category: Парки и скверы
+      rubric_id: '168'
       rubric_name: Парки
 
     - category: Торговые центры
+      rubric_id: '611'
       rubric_name: Торговые центры
 
-    - category: Торгово-развлекательные центры
-      rubric_name: Торгово-развлекательные центры
-
-    - category: Торгово-развлекательные комплексы
-      rubric_name: Торгово-развлекательные комплексы
-
-    - category: Торговые комплексы
-      rubric_name: Торговые комплексы
-
     - category: Остановки общественного транспорта
+      rubric_id: '450'
       rubric_name: Остановки общественного транспорта
 
     - category: Театры
+      rubric_id: '199'
       rubric_name: Театры
 
     - category: Музеи
+      rubric_id: '193'
       rubric_name: Музеи
 
     - category: Кинотеатры
+      rubric_id: '192'
       rubric_name: Кинотеатры
 
     - category: Стадионы
+      rubric_id: '634'
       rubric_name: Стадионы / Спортивные арены
 
 analysis:
@@ -149,6 +156,60 @@ city_center_search_queries:
   - '{city}, центр города'
   - '{city}, центральная площадь'
   - '{city}'
+
+anti_driver_queries:
+  - завод
+  - промзона
+  - железнодорожная станция
+  - автовокзал
+  - ТЭЦ
+  - свалка
+  - кладбище
+  - гаражный кооператив
+  - автосервис
+  - АЗС
+
+anti_drivers:
+  queries:
+    - type: Промышленность
+      query: завод
+      penalty: 8
+
+    - type: Промышленность
+      query: промзона
+      penalty: 8
+
+    - type: Шумный транспортный узел
+      query: железнодорожная станция
+      penalty: 6
+
+    - type: Шумный транспортный узел
+      query: автовокзал
+      penalty: 6
+
+    - type: Экологический риск
+      query: ТЭЦ
+      penalty: 10
+
+    - type: Экологический риск
+      query: свалка
+      penalty: 10
+
+    - type: Нежелательное соседство
+      query: кладбище
+      penalty: 7
+
+    - type: Нежелательное соседство
+      query: гаражный кооператив
+      penalty: 5
+
+    - type: Нежелательное соседство
+      query: автосервис
+      penalty: 4
+
+    - type: Нежелательное соседство
+      query: АЗС
+      penalty: 4
 
 benchmark:
   district:
