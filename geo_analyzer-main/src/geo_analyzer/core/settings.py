@@ -55,13 +55,95 @@ def _app_data_dir() -> Path:
     return _project_root() / "data"
 
 
-def _load_env_for_dev() -> None:
-    if _is_frozen():
-        return
+def _unique_paths(paths: list[Path]) -> list[Path]:
+    result: list[Path] = []
+    seen: set[str] = set()
 
-    env_path = _project_root() / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
+    for path in paths:
+        try:
+            normalized = str(path.expanduser().resolve())
+        except Exception:
+            normalized = str(path)
+
+        key = normalized.lower() if os.name == "nt" else normalized
+        if key in seen:
+            continue
+
+        seen.add(key)
+        result.append(Path(normalized))
+
+    return result
+
+
+def _candidate_env_paths() -> list[Path]:
+    """Return all supported .env locations.
+
+    The repository is often cloned as ``geo_analyzer-main/geo_analyzer-main``.
+    Older Windows builds also read .env next to GeoAnalyzer.exe.  Searching all
+    predictable locations avoids false "API key not found" errors when the file
+    is placed one level higher than the runtime root.
+    """
+    paths: list[Path] = []
+
+    explicit = os.getenv("GEO_ANALYZER_ENV_FILE") or os.getenv("GEO_ANALYZER_DOTENV")
+    if explicit:
+        paths.append(Path(explicit))
+
+    cwd = Path.cwd()
+    project_root = _project_root()
+    exe_dir = _exe_dir()
+    resource_root = _resource_root()
+
+    paths.extend(
+        [
+            cwd / ".env",
+            cwd / "geo_analyzer-main" / ".env",
+            project_root / ".env",
+            project_root.parent / ".env",
+            exe_dir / ".env",
+            exe_dir.parent / ".env",
+            resource_root / ".env",
+            resource_root.parent / ".env",
+        ]
+    )
+
+    return _unique_paths(paths)
+
+
+def _load_env_files() -> None:
+    for env_path in _candidate_env_paths():
+        if env_path.exists() and env_path.is_file():
+            load_dotenv(env_path, override=False)
+
+
+def _read_env_file_value(path: Path, key: str) -> str:
+    if not path.exists() or not path.is_file():
+        return ""
+
+    try:
+        lines = path.read_text(encoding="utf-8-sig").splitlines()
+    except UnicodeDecodeError:
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except Exception:
+            return ""
+    except Exception:
+        return ""
+
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+
+        env_key, value = line.split("=", 1)
+        if env_key.strip() != key:
+            continue
+
+        parsed = value.strip().strip('"').strip("'")
+        if parsed:
+            return parsed
+
+    return ""
 
 
 def _read_embedded_dgis_key() -> str:
@@ -198,7 +280,7 @@ class Settings:
     config_path: Path | None = None
 
     def __post_init__(self) -> None:
-        _load_env_for_dev()
+        _load_env_files()
         self.config_path = _first_existing_config_path()
         self.config = _deep_merge(_default_config(), _read_yaml(self.config_path))
 
@@ -224,6 +306,10 @@ class Settings:
     @property
     def project_root(self) -> Path:
         return _project_root()
+
+    @property
+    def env_paths(self) -> list[Path]:
+        return _candidate_env_paths()
 
     @property
     def app_data_dir(self) -> Path:
@@ -255,24 +341,14 @@ class Settings:
 
     @property
     def dgis_api_key(self) -> str:
-        env_key = os.getenv("DGIS_API_KEY", "").strip()
+        env_key = os.getenv("DGIS_API_KEY", "").strip().strip('"').strip("'")
         if env_key:
             return env_key
 
-        portable_env = self.app_dir / ".env"
-        if portable_env.exists():
-            try:
-                for line in portable_env.read_text(encoding="utf-8").splitlines():
-                    line = line.strip()
-                    if not line or line.startswith("#") or "=" not in line:
-                        continue
-                    key, value = line.split("=", 1)
-                    if key.strip() == "DGIS_API_KEY":
-                        parsed = value.strip().strip('"').strip("'")
-                        if parsed:
-                            return parsed
-            except Exception:
-                pass
+        for env_path in _candidate_env_paths():
+            parsed = _read_env_file_value(env_path, "DGIS_API_KEY")
+            if parsed:
+                return parsed
 
         return _read_embedded_dgis_key()
 
